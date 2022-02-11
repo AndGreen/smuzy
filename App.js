@@ -1,19 +1,46 @@
 import React from 'react';
 import {useColorScheme} from 'react-native';
-import {DarkTheme, DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen} from './src/screens/HomeScreen';
+import {DayScreen} from './src/screens/DayScreen';
+import {RoutinesScreen} from './src/screens/RoutinesScreen';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const App = () => {
   const scheme = useColorScheme();
 
   return (
     <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+
+            if (route.name === 'Routines') {
+              iconName = 'cafe-outline';
+            }
+
+            if (route.name === 'Day') {
+              iconName = 'calendar-outline';
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: 'tomato',
+          tabBarInactiveTintColor: 'gray',
+        })}>
+        <Tab.Screen name="Routines" component={RoutinesScreen} />
+        <Tab.Screen name="Day" component={DayScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };

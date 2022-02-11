@@ -1,13 +1,6 @@
 import React from 'react';
 import tw from 'twrnc';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {ScrollView, Text, useColorScheme, View} from 'react-native';
 import {
   DebugInstructions,
   Header,
@@ -16,7 +9,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {Section} from '../components/Section';
 
-export const HomeScreen = () => {
+export const DayScreen = () => {
   const isDarkMode = useColorScheme() == 'dark';
 
   const bgDarkMode = isDarkMode ? 'bg-gray-800' : 'bg-gray-50 bg-opacity-50';
@@ -24,7 +17,6 @@ export const HomeScreen = () => {
 
   return (
     <>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={tw.style(bgDarkMode)}>
