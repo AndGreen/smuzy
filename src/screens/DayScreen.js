@@ -10,18 +10,13 @@ import {
 import {Section} from '../components/Section';
 
 export const DayScreen = () => {
-  const isDarkMode = useColorScheme() == 'dark';
-
-  const bgDarkMode = isDarkMode ? 'bg-gray-800' : 'bg-gray-50 bg-opacity-50';
-  const viewBgDarkMode = isDarkMode ? 'bg-gray-800' : 'bg-white';
-
   return (
     <>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={tw.style(bgDarkMode)}>
+        style={tw`dark:bg-[#222222] bg-white`}>
         <Header />
-        <View style={tw.style(viewBgDarkMode)}>
+        <View style={tw`dark:bg-[#222222] bg-white`}>
           <Section title="Step One">
             Edit <Text style={tw`font-bold`}>App.js</Text> to change this screen
             and then come back to see your edits.
