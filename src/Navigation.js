@@ -12,8 +12,7 @@ import {
 import {DayScreen} from './screens/DayScreen';
 import React from 'react';
 import {useColorScheme} from 'react-native';
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,19 +22,14 @@ export const Navigation = () => {
     <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Tab.Navigator
         screenOptions={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => {
-            let iconName;
-
-            if (route.name === 'Routines') {
-              iconName = 'cafe-outline';
-            }
-
-            if (route.name === 'Day') {
-              iconName = 'calendar-outline';
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
+          tabBarIcon: ({color, size}) => {
+            const icons = {
+              Routines: 'cafe-outline',
+              Day: 'calendar-outline',
+            };
+            return (
+              <Ionicons name={icons[route.name]} size={size} color={color} />
+            );
           },
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',

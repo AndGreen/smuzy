@@ -1,6 +1,13 @@
 import React from 'react';
 import tw from 'twrnc';
-import {Button, FlatList, Text, View, Pressable} from 'react-native';
+import {
+  Button,
+  FlatList,
+  Text,
+  View,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import {useStoreState, useStoreActions} from 'easy-peasy';
 
 export const RoutinesHeadLeftButton = () => {
@@ -14,8 +21,10 @@ export const RoutinesHeadLeftButton = () => {
 export const RoutinesHeadRightButton = () => {
   const addRoutines = useStoreActions(actions => actions.addDefaultRoutines);
   return (
-    <View style={tw`mr-2`}>
-      <Button onPress={() => {}} title="add" color="#fff" />
+    <View style={tw`mr-3`}>
+      <TouchableOpacity onPress={() => alert('pressed')}>
+        <Text style={tw`text-white text-lg`}>add</Text>
+      </TouchableOpacity>
     </View>
   );
 };
