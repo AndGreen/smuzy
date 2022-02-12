@@ -9,21 +9,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useStoreState, useStoreActions} from 'easy-peasy';
-
-export const RoutinesHeadLeftButton = () => {
-  return (
-    <View style={tw`ml-2`}>
-      <Button onPress={() => {}} title="edit" color="#fff" />
-    </View>
-  );
-};
+import { Ionicons } from '@expo/vector-icons';
 
 export const RoutinesHeadRightButton = () => {
   const addRoutines = useStoreActions(actions => actions.addDefaultRoutines);
   return (
     <View style={tw`mr-3`}>
-      <TouchableOpacity onPress={() => alert('pressed')}>
-        <Text style={tw`text-white text-lg`}>add</Text>
+      <TouchableOpacity onPress={() => {
+        addRoutines();
+        alert("");
+      }}>
+        <Ionicons name="create-outline" size={25} style={tw`text-white`} />
       </TouchableOpacity>
     </View>
   );

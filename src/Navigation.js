@@ -3,7 +3,7 @@ import {
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import {
   RoutinesHeadLeftButton,
   RoutinesHeadRightButton,
@@ -38,7 +38,6 @@ export const Navigation = () => {
           name="Routines"
           options={{
             headerRight: () => <RoutinesHeadRightButton />,
-            headerLeft: () => <RoutinesHeadLeftButton />,
           }}
           component={RoutinesScreen}
         />
