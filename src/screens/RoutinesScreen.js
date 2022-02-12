@@ -1,20 +1,21 @@
 import React from 'react';
 import tw from 'twrnc';
-import {Button, FlatList, Text, View} from 'react-native';
+import {Button, FlatList, Text, View, Pressable} from 'react-native';
 import {useStoreState, useStoreActions} from 'easy-peasy';
 
-export const RoutinesHeadButton = () => {
+export const RoutinesHeadLeftButton = () => {
+  return (
+    <View style={tw`ml-2`}>
+      <Button onPress={() => {}} title="edit" color="#fff" />
+    </View>
+  );
+};
+
+export const RoutinesHeadRightButton = () => {
   const addRoutines = useStoreActions(actions => actions.addDefaultRoutines);
   return (
     <View style={tw`mr-2`}>
-      <Button
-        onPress={() => {
-          addRoutines();
-          alert('Routines added!');
-        }}
-        title="add"
-        color="#fff"
-      />
+      <Button onPress={() => {}} title="add" color="#fff" />
     </View>
   );
 };
