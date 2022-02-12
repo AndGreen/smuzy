@@ -1,5 +1,5 @@
 import React from 'react';
-import {useColorScheme} from 'react-native';
+import {Button, useColorScheme, View} from 'react-native';
 import {StoreProvider} from 'easy-peasy';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
@@ -9,7 +9,7 @@ import {
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {DayScreen} from './src/screens/DayScreen';
-import {RoutinesScreen} from './src/screens/RoutinesScreen';
+import {RoutinesHeadButton, RoutinesScreen} from './src/screens/RoutinesScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {store} from './src/common/store';
 import tw, {useDeviceContext} from 'twrnc';
@@ -43,7 +43,13 @@ const App = () => {
             tabBarActiveTintColor: 'tomato',
             tabBarInactiveTintColor: 'gray',
           })}>
-          <Tab.Screen name="Routines" component={RoutinesScreen} />
+          <Tab.Screen
+            name="Routines"
+            options={{
+              headerRight: () => <RoutinesHeadButton />,
+            }}
+            component={RoutinesScreen}
+          />
           <Tab.Screen name="Day" component={DayScreen} />
         </Tab.Navigator>
       </NavigationContainer>
