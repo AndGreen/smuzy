@@ -20,7 +20,7 @@ export const RoutinesHeadRightButton = () => {
           addRoutines();
           alert('');
         }}>
-        <Ionicons name="create-outline" size={25} style={tw`text-white`} />
+        <Ionicons name="create-outline" size={25} style={tw`dark:text-white text-black`} />
       </TouchableOpacity>
     </View>
   );

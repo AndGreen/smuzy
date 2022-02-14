@@ -32,7 +32,7 @@ export const RoutineModal = ({route, navigation}) => {
         <TextInput
           clearButtonMode="while-editing"
           placeholder="Routine name"
-          style={tw`h-10 w-11/12 bg-zinc-800 pl-5 text-white rounded-lg mb-5`}
+          style={tw`h-10 w-11/12 dark:bg-zinc-800 bg-gray-200 pl-5 text-black dark:text-white rounded-lg mb-5`}
           onChangeText={onChangeText}
           value={text}
         />
@@ -41,7 +41,7 @@ export const RoutineModal = ({route, navigation}) => {
           setActiveColor={setActiveColor}
         />
         <Pressable
-          style={tw`flex w-11/12 bg-zinc-800 py-3 items-center rounded-lg`}
+          style={tw`flex w-11/12 dark:bg-zinc-800 bg-gray-200 py-3 items-center rounded-lg`}
           onPress={() => {
             alert('deleted');
             navigation.goBack();
