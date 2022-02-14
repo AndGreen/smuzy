@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {useStoreState, useStoreActions} from 'easy-peasy';
 import {Ionicons} from '@expo/vector-icons';
-import {EditRoutineModal} from '../components/EditRoutineModal';
 
 export const RoutinesHeadRightButton = () => {
   const addRoutines = useStoreActions(actions => actions.addDefaultRoutines);
@@ -27,9 +26,9 @@ export const RoutinesHeadRightButton = () => {
   );
 };
 
-export const RoutinesScreen = () => {
+export const RoutinesScreen = ({navigation}) => {
   const routines = useStoreState(state => state.routines.list);
-  const [visible, setVisible] = useState(false);
+
   return (
     <View style={tw`h-full`}>
       <FlatList
@@ -38,7 +37,9 @@ export const RoutinesScreen = () => {
         renderItem={({item, index}) => (
           <Pressable
             onPress={() => {
-              setVisible(true);
+              navigation.navigate('RoutineModal', {
+                title: item.title,
+              });
             }}>
             <View
               style={tw`${
@@ -55,7 +56,6 @@ export const RoutinesScreen = () => {
         )}
         keyExtractor={item => item.id}
       />
-      <EditRoutineModal isVisible={visible} setModalVisible={setVisible} />
     </View>
   );
 };

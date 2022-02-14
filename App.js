@@ -2,7 +2,7 @@ import React from 'react';
 import {StoreProvider} from 'easy-peasy';
 import {store} from './src/common/store';
 import tw, {useDeviceContext} from 'twrnc';
-import {Navigation} from './src/Navigation';
+import {Navigation} from './src/common/navigation';
 
 const App = () => {
   useDeviceContext(tw);
