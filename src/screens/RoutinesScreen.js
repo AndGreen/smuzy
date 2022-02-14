@@ -39,8 +39,10 @@ export const RoutinesScreen = ({navigation}) => {
             onPress={() => {
               navigation.navigate('RoutineModal', {
                 title: item.title,
+                color: item.color,
               });
-            }}>
+            }}
+            >
             <View
               style={tw`${
                 index !== routines.length - 1 && 'border-b'
