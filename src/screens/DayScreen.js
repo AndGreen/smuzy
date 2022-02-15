@@ -38,10 +38,13 @@ export const DayScreen = () => {
   const colorsMap = getColorListByRoutines(routines);
 
   return (
-    <View style={tw`w-full h-full flex bg-zinc-800 items-center pt-6`}>
-      <View style={tw``}>
+    <View style={tw`w-full h-full flex items-center pt-20`}>
+      {/* Todo: better h-full or not? */}
+      <View style={tw`p-2 h-full w-full pt-4 rounded-t-lg bg-zinc-800`}>
         {days.map((line, lineNum) => (
-          <View style={tw`flex flex-row items-center`} key={`day-line-${lineNum}`}>
+          <View
+            style={tw`flex flex-row items-center`}
+            key={`day-line-${lineNum}`}>
             <Text style={tw`text-xs dark:text-gray-500 w-1/11 text-right mr-2`}>
               {linesLabels[lineNum]}
             </Text>
