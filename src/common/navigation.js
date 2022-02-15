@@ -5,15 +5,12 @@ import {
   NavigationContainer,
 } from '@react-navigation/native';
 import {Ionicons} from '@expo/vector-icons';
-import {
-  RoutinesHeadRightButton,
-  RoutinesScreen,
-} from '../screens/RoutinesScreen';
+import {routinesHeaderButtons, RoutinesScreen} from '../screens/RoutinesScreen';
 import {DayScreen} from '../screens/DayScreen';
 import {useColorScheme} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
-import {RoutineModal, renderRoutineModalHeader} from '../screens/RoutineModal';
+import {RoutineModal, routineModalHeaderButtons} from '../screens/RoutineModal';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,9 +33,7 @@ const Main = () => {
       })}>
       <Tab.Screen
         name="Routines"
-        options={{
-          headerRight: () => <RoutinesHeadRightButton />,
-        }}
+        options={props => ({...routinesHeaderButtons(props)})}
         component={RoutinesScreen}
       />
       <Tab.Screen name="Day" component={DayScreen} />
@@ -60,7 +55,10 @@ export const Navigation = () => {
           <Stack.Screen
             name="RoutineModal"
             component={RoutineModal}
-            options={renderRoutineModalHeader}
+            options={props => ({
+              title: 'Edit Routine',
+              ...routineModalHeaderButtons(props),
+            })}
           />
         </Stack.Group>
       </Stack.Navigator>

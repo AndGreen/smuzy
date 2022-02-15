@@ -11,19 +11,41 @@ import {
 import {useStoreState, useStoreActions} from 'easy-peasy';
 import {Ionicons} from '@expo/vector-icons';
 
-export const RoutinesHeadRightButton = () => {
-  const addRoutines = useStoreActions(actions => actions.addDefaultRoutines);
-  return (
-    <View style={tw`mr-3`}>
-      <TouchableOpacity
-        onPress={() => {
-          addRoutines();
-          alert('');
-        }}>
-        <Ionicons name="create-outline" size={25} style={tw`dark:text-white text-black`} />
-      </TouchableOpacity>
-    </View>
-  );
+export const routinesHeaderButtons = ({navigation}) => {
+  return {
+    headerRight: () => (
+      <View style={tw`mr-3`}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('RoutineModal', {
+              isNew: true,
+            });
+          }}>
+          <Ionicons
+            name="create-outline"
+            size={25}
+            style={tw`dark:text-white text-black`}
+          />
+        </TouchableOpacity>
+      </View>
+    ),
+    headerLeft: () => {
+      const restoreDefaultRoutines = useStoreActions(
+        state => state.restoreDefaultRoutines,
+      );
+      return (
+        <View style={tw`mr-3`}>
+          <Button
+            onPress={() => {
+              restoreDefaultRoutines();
+              alert('restored!');
+            }}
+            title="restore"
+          />
+        </View>
+      );
+    },
+  };
 };
 
 export const RoutinesScreen = ({navigation}) => {
@@ -38,11 +60,10 @@ export const RoutinesScreen = ({navigation}) => {
           <Pressable
             onPress={() => {
               navigation.navigate('RoutineModal', {
-                title: item.title,
-                color: item.color,
+                ...item,
+                isNew: false,
               });
-            }}
-            >
+            }}>
             <View
               style={tw`${
                 index !== routines.length - 1 && 'border-b'
