@@ -14,7 +14,7 @@ export const ColorPicker = ({activeColor, setActiveColor}) => {
         return (
           <Pressable key={color} onPress={() => {setActiveColor(color)}}>
             <View
-              style={tw`w-14 h-14 ${
+              style={tw`rounded-full w-12 h-12 mr-5 mb-5 ${
                 isActive ? 'border-2' : 'border'
               } ${borderColor} bg-[${color}] justify-center items-center`}>
               {isActive && (
