@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Pressable, Button, TextInput} from 'react-native';
-import {v4 as uuid} from 'uuid';
+import uuid from 'react-native-uuid';
 import tw from 'twrnc';
 import {ColorPicker} from '../components/ColorPicker';
 import {useStoreActions} from 'easy-peasy';
@@ -16,25 +16,6 @@ export const routineModalHeaderButtons = ({navigation, route}) => ({
       />
     </View>
   ),
-  headerRight: () => {
-    const {isNew, ...routine} = route.params;
-    const newRoutine = useStoreActions(state => state.newRoutine);
-    const updateRoutine = useStoreActions(state => state.updateRoutine);
-
-    return (
-      <View style={tw`mr-2`}>
-        <Button
-          onPress={() => {
-            if (isNew) newRoutine(routine);
-            else updateRoutine(routine);
-
-            navigation.goBack();
-          }}
-          title="Save"
-        />
-      </View>
-    );
-  },
 });
 
 export const RoutineModal = ({route, navigation}) => {
@@ -42,6 +23,39 @@ export const RoutineModal = ({route, navigation}) => {
   const [routineName, onChangeRoutineName] = useState(title);
   const [activeColor, setActiveColor] = useState(color);
   const deleteRoutine = useStoreActions(state => state.deleteRoutine);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        const {isNew, ...routine} = route.params;
+        const newRoutine = useStoreActions(state => state.newRoutine);
+        const updateRoutine = useStoreActions(state => state.updateRoutine);
+
+        return (
+          <View style={tw`mr-2`}>
+            <Button
+              onPress={() => {
+                if (isNew) {
+                  newRoutine({
+                    id: uuid.v4(),
+                    color: activeColor,
+                    title: routineName,
+                  });
+                } else
+                  updateRoutine({
+                    ...routine,
+                    color: activeColor,
+                    title: routineName,
+                  });
+                navigation.goBack();
+              }}
+              title="Save"
+            />
+          </View>
+        );
+      },
+    });
+  }, [activeColor, routineName]);
 
   useEffect(() => {
     if (isNew) {
