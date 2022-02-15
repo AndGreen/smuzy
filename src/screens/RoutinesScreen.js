@@ -29,22 +29,6 @@ export const routinesHeaderButtons = ({navigation}) => {
         </TouchableOpacity>
       </View>
     ),
-    headerLeft: () => {
-      const restoreDefaultRoutines = useStoreActions(
-        state => state.restoreDefaultRoutines,
-      );
-      return (
-        <View style={tw`mr-3`}>
-          <Button
-            onPress={() => {
-              restoreDefaultRoutines();
-              alert('restored!');
-            }}
-            title="restore"
-          />
-        </View>
-      );
-    },
   };
 };
 
