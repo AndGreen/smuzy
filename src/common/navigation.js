@@ -7,11 +7,12 @@ import {
 import {Ionicons} from '@expo/vector-icons';
 import {routinesHeaderButtons, RoutinesScreen} from '../screens/RoutinesScreen';
 import {DayScreen} from '../screens/DayScreen';
-import {useColorScheme} from 'react-native';
+import {useColorScheme, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {RoutineModal, routineModalHeaderButtons} from '../screens/RoutineModal';
 import {StatusBar} from 'expo-status-bar';
+import {BlurView} from 'expo-blur';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -31,6 +32,15 @@ const Main = () => {
         },
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
+
+        tabBarStyle: { position: 'absolute' },
+        tabBarBackground: () => (
+          <BlurView
+            tint="dark"
+            intensity={0}
+            style={StyleSheet.absoluteFill}
+          />
+        ),
       })}>
       <Tab.Screen
         name="Routines"
