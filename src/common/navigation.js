@@ -11,6 +11,7 @@ import {useColorScheme} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {RoutineModal, routineModalHeaderButtons} from '../screens/RoutineModal';
+import {StatusBar} from 'expo-status-bar';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -43,25 +44,29 @@ const Main = () => {
 
 export const Navigation = () => {
   const scheme = useColorScheme();
+  const isDarkTheme = scheme === 'dark';
   return (
-    <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Main"
-          options={{headerShown: false}}
-          component={Main}
-        />
-        <Stack.Group screenOptions={{presentation: 'modal'}}>
+    <>
+      <StatusBar style={isDarkTheme ? 'light' : 'dark'} />
+      <NavigationContainer theme={isDarkTheme ? DarkTheme : DefaultTheme}>
+        <Stack.Navigator>
           <Stack.Screen
-            name="RoutineModal"
-            component={RoutineModal}
-            options={props => ({
-              title: 'Edit Routine',
-              ...routineModalHeaderButtons(props),
-            })}
+            name="Main"
+            options={{headerShown: false}}
+            component={Main}
           />
-        </Stack.Group>
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Group screenOptions={{presentation: 'modal'}}>
+            <Stack.Screen
+              name="RoutineModal"
+              component={RoutineModal}
+              options={props => ({
+                title: 'Edit Routine',
+                ...routineModalHeaderButtons(props),
+              })}
+            />
+          </Stack.Group>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
