@@ -3,7 +3,7 @@ import {View, Text, Pressable, Button, TextInput} from 'react-native';
 import uuid from 'react-native-uuid';
 import tw from 'twrnc';
 import {ColorPicker} from '../components/ColorPicker';
-import {useStoreActions} from 'easy-peasy';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 
 export const routineModalHeaderButtons = ({navigation, route}) => ({
   headerLeft: () => (
@@ -16,46 +16,44 @@ export const routineModalHeaderButtons = ({navigation, route}) => ({
       />
     </View>
   ),
+  headerRight: () => {
+    const {isNew} = route.params;
+    const form = useStoreState(state => state.forms.active);
+    const newRoutine = useStoreActions(state => state.newRoutine);
+    const updateRoutine = useStoreActions(state => state.updateRoutine);
+
+    return (
+      <View style={tw`mr-2`}>
+        <Button
+          onPress={() => {
+            if (isNew) {
+              newRoutine({
+                id: uuid.v4(),
+                ...form,
+              });
+            } else
+              updateRoutine(form);
+            navigation.goBack();
+          }}
+          title="Save"
+        />
+      </View>
+    );
+  },
 });
 
 export const RoutineModal = ({route, navigation}) => {
-  const {title, color, id, isNew} = route.params;
-  const [routineName, onChangeRoutineName] = useState(title);
-  const [activeColor, setActiveColor] = useState(color);
+  const {isNew, ...params} = route.params;
+  const form = useStoreState(state => state.forms.active);
+  const updateActiveForm = useStoreActions(state => state.updateActiveForm);
   const deleteRoutine = useStoreActions(state => state.deleteRoutine);
 
   useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => {
-        const {isNew, ...routine} = route.params;
-        const newRoutine = useStoreActions(state => state.newRoutine);
-        const updateRoutine = useStoreActions(state => state.updateRoutine);
-
-        return (
-          <View style={tw`mr-2`}>
-            <Button
-              onPress={() => {
-                if (isNew) {
-                  newRoutine({
-                    id: uuid.v4(),
-                    color: activeColor,
-                    title: routineName,
-                  });
-                } else
-                  updateRoutine({
-                    ...routine,
-                    color: activeColor,
-                    title: routineName,
-                  });
-                navigation.goBack();
-              }}
-              title="Save"
-            />
-          </View>
-        );
-      },
-    });
-  }, [activeColor, routineName]);
+    updateActiveForm(params);
+    return () => {
+      updateActiveForm({});
+    };
+  }, []);
 
   useEffect(() => {
     if (isNew) {
@@ -71,21 +69,25 @@ export const RoutineModal = ({route, navigation}) => {
             clearButtonMode="while-editing"
             placeholder="Routine name"
             style={tw`dark:text-white h-10 w-full dark:bg-zinc-800 bg-gray-200 pl-2 rounded-lg`}
-            onChangeText={onChangeRoutineName}
-            value={routineName}
+            onChangeText={value => {
+              updateActiveForm({...form, title: value});
+            }}
+            value={form.title}
           />
         </View>
         <View style={tw`mb-5`}>
           <ColorPicker
-            activeColor={activeColor}
-            setActiveColor={setActiveColor}
+            activeColor={form.color}
+            setActiveColor={value => {
+              updateActiveForm({...form, color: value});
+            }}
           />
         </View>
         {!isNew && (
           <Pressable
             style={tw`flex w-11/12 dark:bg-zinc-800 bg-gray-200 py-3 items-center rounded-lg`}
             onPress={() => {
-              deleteRoutine({id});
+              deleteRoutine(form.id);
               navigation.goBack();
             }}>
             <Text style={tw`text-red-500 text-base`}>Delete Routine</Text>

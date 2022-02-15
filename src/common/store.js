@@ -1,6 +1,7 @@
 import {createStore, action, persist} from 'easy-peasy';
 import {asyncstorage} from './asyncstorage';
 import {defaultRoutines} from '../constants/routines';
+
 window.requestIdleCallback = null;
 
 export const store = createStore(
@@ -8,6 +9,9 @@ export const store = createStore(
     {
       routines: {
         list: [],
+      },
+      forms: {
+        active: {},
       },
       restoreDefaultRoutines: action(state => {
         state.routines.list = defaultRoutines;
@@ -22,8 +26,11 @@ export const store = createStore(
       }),
       deleteRoutine: action((state, payload) => {
         state.routines.list = state.routines.list.filter(
-          item => item.id !== payload.id,
+          item => item.id !== payload,
         );
+      }),
+      updateActiveForm: action((state, payload) => {
+        state.forms.active = payload;
       }),
     },
     {storage: asyncstorage},
