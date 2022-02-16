@@ -60,7 +60,7 @@ export const DayScreen = () => {
                   <View
                     style={tw`border ${
                       bordersLWidth() + ' ' + borderTWidth
-                    } dark:border-black w-10 h-10`}
+                    } dark:border-black w-10 h-10 rounded-lg`}
                     id={lineNum * 9 + i}
                     key={`day-block-${lineNum}-${i}`}
                     active={lineNum === 2 && i === 4}
