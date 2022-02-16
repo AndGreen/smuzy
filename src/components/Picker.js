@@ -2,22 +2,17 @@ import tw from 'twrnc';
 import {Text, View, Pressable} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
-export const Picker = ({children, style, pressed, onPress}) => {
+export const Picker = ({children = 'today', pressed, onPress}) => {
   return (
-    <View style={tw`${style} h-12`}>
+    <View style={tw``}>
       <Pressable onPress={onPress}>
-        <View
-          style={tw`w-full h-full bg-white/50 rounded-lg dark:bg-zinc-800 bg-gray-200 flex flex-row items-center justify-between px-3`}>
-          <View style={tw`flex flex-row`}>
-            <View style={tw`flex flex-row`}>{children}</View>
-          </View>
-          <View style={tw``}>
-            <Ionicons
-              name={pressed ? 'caret-up-outline' : 'caret-down-outline'}
-              size={15}
-              style={tw`text-white`}
-            />
-          </View>
+        <View style={tw`p-2 flex flex-row items-center`}>
+          <Text style={tw`text-white text-base`}>{children}</Text>
+          <Ionicons
+            name={pressed ? 'chevron-up-outline' : 'chevron-down-outline'}
+            size={15}
+            style={tw`text-white mt-1 ml-2`}
+          />
         </View>
       </Pressable>
     </View>

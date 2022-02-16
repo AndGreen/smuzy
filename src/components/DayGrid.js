@@ -38,9 +38,8 @@ export const DayGrid = () => {
   const colorsMap = getColorListByRoutines(routines);
 
   return (
-    <View style={tw`w-full h-full flex items-center`}>
-      {/* Todo: better h-full or not? */}
-      <View style={tw`p-2 h-full w-full pt-4 rounded-t-lg bg-zinc-800`}>
+    <View style={tw`w-full flex items-center`}>
+      <View style={tw`w-full rounded-lg`}>
         {days.map((line, lineNum) => (
           <View
             style={tw`flex flex-row items-center`}

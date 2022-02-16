@@ -7,11 +7,14 @@ import {
 import {Ionicons} from '@expo/vector-icons';
 import {routinesHeaderButtons, RoutinesScreen} from '../screens/RoutinesScreen';
 import {DayScreen} from '../screens/DayScreen';
-import {useColorScheme} from 'react-native';
+import {Button, useColorScheme, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {RoutineModal, routineModalHeaderButtons} from '../screens/RoutineModal';
 import {StatusBar} from 'expo-status-bar';
+import {Picker} from '../components/Picker';
+import {useStoreActions} from 'easy-peasy';
+import tw from 'twrnc';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -51,9 +54,27 @@ export const Navigation = () => {
       <NavigationContainer theme={isDarkTheme ? DarkTheme : DefaultTheme}>
         <Stack.Navigator>
           <Stack.Screen
-            name="Main"
-            options={{headerShown: false}}
-            component={Main}
+            name="Today"
+            component={DayScreen}
+            options={{
+              headerTitle: () => <Picker />,
+              // headerLeft: () => {
+              //   const restoreDefaultRoutines = useStoreActions(
+              //     state => state.restoreDefaultRoutines,
+              //   );
+              //   return (
+              //     <View style={tw`mr-3`}>
+              //       <Button
+              //         onPress={() => {
+              //           restoreDefaultRoutines();
+              //           alert('restored!');
+              //         }}
+              //         title="restore"
+              //       />
+              //     </View>
+              //   );
+              // },
+            }}
           />
           <Stack.Group screenOptions={{presentation: 'modal'}}>
             <Stack.Screen
