@@ -11,10 +11,10 @@ export const Picker = ({children, style, pressed, onPress}) => {
           <View style={tw`flex flex-row`}>
             <View style={tw`flex flex-row`}>{children}</View>
           </View>
-          <View style={tw``}>
+          <View>
             <Ionicons
-              name={pressed ? 'caret-up-outline' : 'caret-down-outline'}
-              size={15}
+              name={pressed ? 'chevron-up-outline' : 'chevron-down-outline'}
+              size={16}
               style={tw`text-white`}
             />
           </View>

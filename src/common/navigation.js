@@ -12,6 +12,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {RoutineModal, routineModalHeaderButtons} from '../screens/RoutineModal';
 import {StatusBar} from 'expo-status-bar';
+import {HoldMenuProvider} from 'react-native-hold-menu';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -42,12 +43,9 @@ const Main = () => {
   );
 };
 
-export const Navigation = () => {
-  const scheme = useColorScheme();
-  const isDarkTheme = scheme === 'dark';
+export const Navigation = ({isDarkTheme}) => {
   return (
     <>
-      <StatusBar style={isDarkTheme ? 'light' : 'dark'} />
       <NavigationContainer theme={isDarkTheme ? DarkTheme : DefaultTheme}>
         <Stack.Navigator>
           <Stack.Screen
