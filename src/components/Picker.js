@@ -7,11 +7,11 @@ export const Picker = ({children = 'today', pressed, onPress}) => {
     <View style={tw``}>
       <Pressable onPress={onPress}>
         <View style={tw`p-2 flex flex-row items-center`}>
-          <Text style={tw`text-white text-base`}>{children}</Text>
+          <Text style={tw`text-white text-base font-bold`}>{children}</Text>
           <Ionicons
             name={pressed ? 'chevron-up-outline' : 'chevron-down-outline'}
             size={15}
-            style={tw`text-white mt-1 ml-2`}
+            style={tw`text-white mt-1 ml-1`}
           />
         </View>
       </Pressable>
