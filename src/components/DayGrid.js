@@ -3,6 +3,7 @@ import {useStoreActions, useStoreState} from 'easy-peasy';
 import {View, Text, Pressable} from 'react-native';
 import tw from 'twrnc';
 import {getDayFirstBlockId} from '../utils/time';
+import * as Haptics from 'expo-haptics';
 
 const lines = [
   '00:00',
@@ -62,6 +63,7 @@ export const DayGrid = () => {
                   <Pressable
                     onPress={() => {
                       colorizeBlock(blockId);
+                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     }}
                     key={blockId}>
                     <View

@@ -32,7 +32,8 @@
     "react-native-uuid": "^2.0.1",
     "react-native-web": "0.17.1",
     "redux-logger": "^3.0.6",
-    "twrnc": "^3.0.2"
+    "twrnc": "^3.0.2",
+    "expo-haptics": "~11.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
