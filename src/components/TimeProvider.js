@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {getCurrentBlockId} from '../utils/time';
+import {getTimeBlockId} from '../utils/time';
 import {useStoreActions} from 'easy-peasy';
 
 export const TimeProvider = ({children}) => {
-  const updateCurrentBlock = useStoreActions(
-    state => state.updateCurrentBlock,
+  const updateTimeBlock = useStoreActions(
+    state => state.updateTimeBlock,
   );
   const [time, setTime] = useState(Date.now());
 
@@ -17,7 +17,7 @@ export const TimeProvider = ({children}) => {
   }, []);
 
   useEffect(() => {
-    updateCurrentBlock(getCurrentBlockId());
+    updateTimeBlock(getTimeBlockId());
   }, [time]);
 
   // useEffect(() => {}, [])

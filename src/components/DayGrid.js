@@ -1,7 +1,8 @@
 import React from 'react';
-import {useStoreState} from 'easy-peasy';
-import {View, Text} from 'react-native';
+import {useStoreActions, useStoreState} from 'easy-peasy';
+import {View, Text } from 'react-native';
 import tw from 'twrnc';
+import {getDayFirstBlockId} from '../utils/time';
 
 const numOnLines = 8;
 const numOfBlocksInLine = 9;
@@ -35,8 +36,13 @@ const getColorListByRoutines = routines => {
 
 export const DayGrid = () => {
   const routines = useStoreState(state => state.routines.list);
-  const {blocks, currentBlockId} = useStoreState(state => state.days.displayed);
-  const colorsMap = getColorListByRoutines(routines);
+  const timeBlock = useStoreState(state => state.days.timeBlock);
+  const displayedDate = useStoreState(state => state.days.displayedDate);
+  const history = useStoreState(state => state.days.history);
+
+  const dayFirstBlockId = getDayFirstBlockId(displayedDate);
+  const colorsByRoutine = getColorListByRoutines(routines);
+
   return (
     <View style={tw`w-full flex items-center`}>
       <View style={tw`w-full rounded-lg`}>
@@ -49,23 +55,25 @@ export const DayGrid = () => {
             </Text>
             <View style={tw`flex flex-row`}>
               {line.map((day, i) => {
+                const blockId =
+                  dayFirstBlockId + (lineNum * numOfBlocksInLine + i);
+
                 const bordersLWidth = () => {
                   if (i === 0) return 'border-l';
                   else if (i === 3 || i === 6) return 'border-l-2';
                   else return 'border-l-0';
                 };
-                const blockNum = lineNum * numOfBlocksInLine + i;
                 const borderTWidth = lineNum === 0 ? 'border-t' : 'border-t-0';
+
                 return (
                   <View
                     style={tw`border ${
                       bordersLWidth() + ' ' + borderTWidth
                     } dark:border-black w-10 h-10 ${
-                      blocks &&
-                      currentBlockId === blocks[blockNum].id &&
+                      timeBlock === blockId &&
                       'border-2 border-t-2 border-l-2 dark:border-white'
-                    }`}
-                    key={`day-block-${blockNum}`}
+                    } bg-[${colorsByRoutine[history[blockId]]}]`}
+                    key={blockId}
                   />
                 );
               })}

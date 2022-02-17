@@ -1,20 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import tw from 'twrnc';
 import {Pressable, Text, View} from 'react-native';
-import {useStoreActions, useStoreState} from 'easy-peasy';
+import {useStoreState} from 'easy-peasy';
 import {DayGrid} from '../components/DayGrid';
-import {map} from 'lodash';
-import {colors} from '../constants/routines';
 import {Ionicons} from '@expo/vector-icons';
 
 export const DayScreen = ({navigation}) => {
   const routines = useStoreState(state => state.routines.list);
-  const getDayBlocks = useStoreActions(state => state.getDayBlocks);
   const [activeKey, setActiveKey] = useState(false);
-
-  useEffect(() => {
-    getDayBlocks();
-  }, []);
 
   return (
     <View style={tw`flex w-full h-full`}>

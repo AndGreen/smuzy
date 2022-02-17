@@ -16,12 +16,9 @@ export const store = createStore(
         active: {},
       },
       days: {
-        displayed: {
-          date: new Date(),
-          currentBlockId: null,
-          blocks: [],
-        },
-        archive: {},
+        timeBlock: null,
+        displayedDate: new Date(),
+        history: {},
       },
       restoreDefaultRoutines: action(state => {
         state.routines.list = defaultRoutines;
@@ -39,17 +36,16 @@ export const store = createStore(
           item => item.id !== payload,
         );
       }),
+
       updateActiveForm: action((state, payload) => {
         state.forms.active = payload;
       }),
-      updateCurrentBlock: action((state, payload) => {
-        state.days.displayed.currentBlockId = payload;
-      }),
-      getDayBlocks: action((state, payload) => {
-        state.days.displayed.blocks = getDayBlocks(state.days.displayed);
+
+      updateTimeBlock: action((state, blockId) => {
+        state.days.timeBlock = blockId;
       }),
     },
     {storage: asyncstorage},
   ),
-  {middleware: [logger]},
+  {middleware: []},
 );
