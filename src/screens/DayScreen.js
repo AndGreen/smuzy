@@ -7,9 +7,7 @@ import {map} from 'lodash';
 import {colors} from '../constants/routines';
 import {Ionicons} from '@expo/vector-icons';
 
-export const DayScreen = () => {
-  const [isPressed, setPressed] = useState(false);
-  const [activeColor, setActiveColor] = useState();
+export const DayScreen = ({navigation}) => {
   const routines = useStoreState(state => state.routines.list);
   const [activeKey, setActiveKey] = useState(false);
   return (
@@ -18,18 +16,19 @@ export const DayScreen = () => {
         <DayGrid />
       </View>
 
-      <View style={tw`flex flex-row flex-wrap flex-shrink ml-3`}>
-        {/*<View*/}
-        {/*  style={tw`flex flex-row items-center mr-3  rounded-lg p-2 mb-4`}>*/}
-        {/*  /!*<View style={tw`w-4 h-4 bg-zinc-800 mr-1`} />*!/*/}
-        {/*  <Ionicons name="close-outline" size={25} style={tw`text-zinc-800`} />*/}
-        {/*  /!*<Text style={tw`text-zinc-700 text-base text-center`}> Empty</Text>*!/*/}
-        {/*</View>*/}
+      <View style={tw`flex flex-row flex-wrap flex-grow ml-2`}>
         <>
           {routines &&
             routines.map((routine, key) => {
               return (
                 <Pressable
+                  key={`routine-${key}`}
+                  onLongPress={() => {
+                    navigation.navigate('RoutineModal', {
+                      ...routine,
+                      isNew: false,
+                    });
+                  }}
                   onPress={() => {
                     setActiveKey(key !== activeKey ? key : false);
                   }}
@@ -51,56 +50,42 @@ export const DayScreen = () => {
             })}
         </>
         {activeKey === false && (
-          <View
-            style={tw`flex flex-row items-center mr-3 border border-white/10 rounded-lg px-2 pr-3 h-10 mb-4`}>
-            <Ionicons name="add-outline" size={25} style={tw`text-zinc-800`} />
-            <Text style={tw`text-gray-300 text-base text-center`}> New </Text>
-          </View>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('RoutineModal', {
+                isNew: true,
+              });
+            }}>
+            <View
+              style={tw`flex flex-row items-center mr-3 border border-white/10 rounded-lg px-2 pr-3 h-10 mb-4`}>
+              <Ionicons
+                name="add-outline"
+                size={25}
+                style={tw`text-zinc-800`}
+              />
+              <Text style={tw`text-gray-300 text-base text-center`}> New </Text>
+            </View>
+          </Pressable>
         )}
         {Number.isInteger(activeKey) && (
-          <View
-            style={tw`flex flex-row items-center mr-3  rounded-lg px-2 h-10 mb-4`}>
-            <Ionicons
-              name="close-outline"
-              size={25}
-              style={tw`text-zinc-800`}
-            />
-            <Text style={tw`text-gray-300 text-base text-center`}>
-              {' '}
-              Cancel{' '}
-            </Text>
-          </View>
+          <Pressable
+            onPress={() => {
+              setActiveKey(false);
+            }}>
+            <View
+              style={tw`flex flex-row items-center rounded-lg h-10`}>
+              <Ionicons
+                name="close-outline"
+                size={25}
+                style={tw`text-zinc-800 mr-1`}
+              />
+              <Text style={tw`text-gray-300 text-base text-center`}>
+                Cancel
+              </Text>
+            </View>
+          </Pressable>
         )}
       </View>
-
-      {/*<View style={tw`flex flex-row flex-wrap w-11/12`}>*/}
-      {/*  {routines && routines.map(routine, color => {*/}
-      {/*    const isActive = activeColor === color;*/}
-      {/*    const borderColor = isActive*/}
-      {/*      ? 'border-white'*/}
-      {/*      : 'dark:border-zinc-800 border-white';*/}
-      {/*    return (*/}
-      {/*      <Pressable*/}
-      {/*        key={color}*/}
-      {/*        onPress={() => {*/}
-      {/*          setActiveColor(color);*/}
-      {/*        }}>*/}
-      {/*        <View*/}
-      {/*          style={tw`w-14 h-14 ${*/}
-      {/*            isActive ? 'border-2' : 'border'*/}
-      {/*          } ${borderColor} bg-[${color}] justify-center items-center`}>*/}
-      {/*          {isActive && (*/}
-      {/*            <Ionicons*/}
-      {/*              name="checkmark-outline"*/}
-      {/*              size={25}*/}
-      {/*              style={tw`text-white`}*/}
-      {/*            />*/}
-      {/*          )}*/}
-      {/*        </View>*/}
-      {/*      </Pressable>*/}
-      {/*    );*/}
-      {/*  })}*/}
-      {/*</View>*/}
     </View>
   );
 };
