@@ -35,8 +35,8 @@ const getColorListByRoutines = routines => {
 
 export const DayGrid = () => {
   const routines = useStoreState(state => state.routines.list);
+  const {blocks, currentBlockId} = useStoreState(state => state.days.displayed);
   const colorsMap = getColorListByRoutines(routines);
-
   return (
     <View style={tw`w-full flex items-center`}>
       <View style={tw`w-full rounded-lg`}>
@@ -54,16 +54,18 @@ export const DayGrid = () => {
                   else if (i === 3 || i === 6) return 'border-l-2';
                   else return 'border-l-0';
                 };
+                const blockNum = lineNum * numOfBlocksInLine + i;
                 const borderTWidth = lineNum === 0 ? 'border-t' : 'border-t-0';
                 return (
                   <View
                     style={tw`border ${
                       bordersLWidth() + ' ' + borderTWidth
-                    } dark:border-black w-10 h-10`}
-                    id={lineNum * 9 + i}
-                    key={`day-block-${lineNum}-${i}`}
-                    active={lineNum === 2 && i === 4}
-                    colorsMap={colorsMap}
+                    } dark:border-black w-10 h-10 ${
+                      blocks &&
+                      currentBlockId === blocks[blockNum].id &&
+                      'border-2 border-t-2 border-l-2 dark:border-white'
+                    }`}
+                    key={`day-block-${blockNum}`}
                   />
                 );
               })}

@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import tw from 'twrnc';
 import {Pressable, Text, View} from 'react-native';
-import {useStoreState} from 'easy-peasy';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 import {DayGrid} from '../components/DayGrid';
 import {map} from 'lodash';
 import {colors} from '../constants/routines';
@@ -9,7 +9,13 @@ import {Ionicons} from '@expo/vector-icons';
 
 export const DayScreen = ({navigation}) => {
   const routines = useStoreState(state => state.routines.list);
+  const getDayBlocks = useStoreActions(state => state.getDayBlocks);
   const [activeKey, setActiveKey] = useState(false);
+
+  useEffect(() => {
+    getDayBlocks();
+  }, []);
+
   return (
     <View style={tw`flex w-full h-full`}>
       <View style={tw`mb-5 p-4 pl-2 bg-zinc-800`}>
@@ -72,8 +78,7 @@ export const DayScreen = ({navigation}) => {
             onPress={() => {
               setActiveKey(false);
             }}>
-            <View
-              style={tw`flex flex-row items-center rounded-lg h-10`}>
+            <View style={tw`flex flex-row items-center rounded-lg h-10`}>
               <Ionicons
                 name="close-outline"
                 size={25}
