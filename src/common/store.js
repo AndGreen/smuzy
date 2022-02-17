@@ -45,6 +45,9 @@ export const store = createStore(
       updateTimeBlock: action((state, blockId) => {
         state.days.timeBlock = blockId;
       }),
+      setDisplayedDate: action((state, date) => {
+        state.days.displayedDate = date;
+      }),
       colorizeBlock: action((state, blockId) => {
         state.days.history[blockId] = state.routines.active;
       }),

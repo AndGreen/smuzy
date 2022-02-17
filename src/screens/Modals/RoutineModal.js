@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, Pressable, Button, TextInput} from 'react-native';
 import uuid from 'react-native-uuid';
 import tw from 'twrnc';
-import {ColorPicker} from '../components/ColorPicker';
+import {ColorPicker} from '../../components/ColorPicker';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 
 export const routineModalHeaderButtons = ({navigation, route}) => ({

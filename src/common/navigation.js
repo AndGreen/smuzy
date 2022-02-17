@@ -10,40 +10,12 @@ import {DayScreen} from '../screens/DayScreen';
 import {Button, useColorScheme, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
-import {RoutineModal, routineModalHeaderButtons} from '../screens/RoutineModal';
+import {RoutineModal, routineModalHeaderButtons} from '../screens/Modals/RoutineModal';
 import {StatusBar} from 'expo-status-bar';
-import {Picker} from '../components/Picker';
+import {DayPicker} from '../components/DayPicker';
 import {useStoreActions} from 'easy-peasy';
-import tw from 'twrnc';
 
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-const Main = () => {
-  return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({color, size}) => {
-          const icons = {
-            Routines: 'cafe-outline',
-            Day: 'calendar-outline',
-          };
-          return (
-            <Ionicons name={icons[route.name]} size={size} color={color} />
-          );
-        },
-        tabBarActiveTintColor: 'tomato',
-        tabBarInactiveTintColor: 'gray',
-      })}>
-      <Tab.Screen
-        name="Routines"
-        options={props => ({...routinesHeaderButtons(props)})}
-        component={RoutinesScreen}
-      />
-      <Tab.Screen name="Day" component={DayScreen} />
-    </Tab.Navigator>
-  );
-};
 
 export const Navigation = () => {
   const scheme = useColorScheme();
@@ -57,23 +29,7 @@ export const Navigation = () => {
             name="Today"
             component={DayScreen}
             options={{
-              headerTitle: () => <Picker />,
-              // headerLeft: () => {
-              //   const restoreDefaultRoutines = useStoreActions(
-              //     state => state.restoreDefaultRoutines,
-              //   );
-              //   return (
-              //     <View style={tw`mr-3`}>
-              //       <Button
-              //         onPress={() => {
-              //           restoreDefaultRoutines();
-              //           alert('restored!');
-              //         }}
-              //         title="restore"
-              //       />
-              //     </View>
-              //   );
-              // },
+              headerTitle: () => <DayPicker />
             }}
           />
           <Stack.Group screenOptions={{presentation: 'modal'}}>
