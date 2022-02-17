@@ -1,13 +1,10 @@
 import React from 'react';
 import {useStoreActions, useStoreState} from 'easy-peasy';
-import {View, Text } from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import tw from 'twrnc';
 import {getDayFirstBlockId} from '../utils/time';
 
-const numOnLines = 8;
-const numOfBlocksInLine = 9;
-
-const linesLabels = [
+const lines = [
   '00:00',
   '03:00',
   '06:00',
@@ -18,13 +15,7 @@ const linesLabels = [
   '21:00',
 ];
 
-let days = [];
-for (let i = 0; i < numOnLines; i++) {
-  days[i] = [];
-  for (let j = 0; j < numOfBlocksInLine; j++) {
-    days[i][j] = '';
-  }
-}
+const elements = [...new Array(9)];
 
 const getColorListByRoutines = routines => {
   const colors = {};
@@ -40,23 +31,25 @@ export const DayGrid = () => {
   const displayedDate = useStoreState(state => state.days.displayedDate);
   const history = useStoreState(state => state.days.history);
 
+  const colorizeBlock = useStoreActions(state => state.colorizeBlock);
   const dayFirstBlockId = getDayFirstBlockId(displayedDate);
   const colorsByRoutine = getColorListByRoutines(routines);
 
   return (
     <View style={tw`w-full flex items-center`}>
       <View style={tw`w-full rounded-lg`}>
-        {days.map((line, lineNum) => (
+        {lines.map((lineLabel, lineNum) => (
           <View
             style={tw`flex flex-row items-center`}
             key={`day-line-${lineNum}`}>
             <Text style={tw`text-xs dark:text-gray-500 w-1/11 text-right mr-2`}>
-              {linesLabels[lineNum]}
+              {lineLabel}
             </Text>
             <View style={tw`flex flex-row`}>
-              {line.map((day, i) => {
+              {elements.map((_, i) => {
                 const blockId =
-                  dayFirstBlockId + (lineNum * numOfBlocksInLine + i);
+                  dayFirstBlockId + (lineNum * elements.length + i);
+                const blockColor = colorsByRoutine[history[blockId]];
 
                 const bordersLWidth = () => {
                   if (i === 0) return 'border-l';
@@ -66,15 +59,20 @@ export const DayGrid = () => {
                 const borderTWidth = lineNum === 0 ? 'border-t' : 'border-t-0';
 
                 return (
-                  <View
-                    style={tw`border ${
-                      bordersLWidth() + ' ' + borderTWidth
-                    } dark:border-black w-10 h-10 ${
-                      timeBlock === blockId &&
-                      'border-2 border-t-2 border-l-2 dark:border-white'
-                    } bg-[${colorsByRoutine[history[blockId]]}]`}
-                    key={blockId}
-                  />
+                  <Pressable
+                    onPress={() => {
+                      colorizeBlock(blockId);
+                    }}
+                    key={blockId}>
+                    <View
+                      style={tw`border ${
+                        bordersLWidth() + ' ' + borderTWidth
+                      } dark:border-black w-10 h-10 ${
+                        timeBlock === blockId &&
+                        'border-2 border-t-2 border-l-2 dark:border-white'
+                      } ${blockColor && `bg-[${blockColor}]`}`}
+                    />
+                  </Pressable>
                 );
               })}
             </View>

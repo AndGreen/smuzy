@@ -1,8 +1,6 @@
 import {createStore, action, persist} from 'easy-peasy';
 import {asyncstorage} from './asyncstorage';
 import {defaultRoutines} from '../constants/routines';
-import {getDayBlocks} from '../utils/time';
-import {logger} from 'redux-logger/src';
 
 window.requestIdleCallback = null;
 
@@ -10,6 +8,7 @@ export const store = createStore(
   persist(
     {
       routines: {
+        active: null,
         list: [],
       },
       forms: {
@@ -36,13 +35,18 @@ export const store = createStore(
           item => item.id !== payload,
         );
       }),
-
+      // Todo: rename update to set
       updateActiveForm: action((state, payload) => {
         state.forms.active = payload;
       }),
-
+      setActiveRoutine: action((state, routineId) => {
+        state.routines.active = routineId;
+      }),
       updateTimeBlock: action((state, blockId) => {
         state.days.timeBlock = blockId;
+      }),
+      colorizeBlock: action((state, blockId) => {
+        state.days.history[blockId] = state.routines.active;
       }),
     },
     {storage: asyncstorage},
