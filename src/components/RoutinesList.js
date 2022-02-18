@@ -5,7 +5,8 @@ import React, {useEffect} from 'react';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 
 export const RoutinesList = ({navigation}) => {
-  const {list, active} = useStoreState(state => state.routines);
+  const list = useStoreState(state => state.routines);
+  const active = useStoreState(state => state.ui.activeRoutine);
   const setActiveRoutine = useStoreActions(state => state.setActiveRoutine);
 
   return (

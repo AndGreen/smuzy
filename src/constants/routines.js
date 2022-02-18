@@ -15,11 +15,6 @@ export const defaultRoutines = [
     id: 'd75692b7-d652-4d53-9cc3-68c51856b4e7',
   },
   {
-    id: '642be5ae-6c46-4a83-9249-aa8075b0153e',
-    title: 'mango work',
-    color: '#9E9E9E',
-  },
-  {
     color: '#667D8A',
     title: 'meetings',
     id: 'f53c267e-d269-40be-84b3-99bba9c3e3fd',
@@ -35,7 +30,7 @@ export const defaultRoutines = [
     id: '635951c5-d9dc-4e3a-a737-e1d4315d9f9f',
   },
   {
-    title: 'smoothy project',
+    title: 'smuzy project',
     color: '#4154AF',
     id: '822cf480-f463-4a95-862e-70d270198360',
   },

@@ -7,52 +7,46 @@ window.requestIdleCallback = null;
 export const store = createStore(
   persist(
     {
-      routines: {
-        active: null, // move to ui
-        list: [],
-      },
-      forms: {
-        active: {}, // move to ui
-      },
-      days: {
-        timeBlock: null, // move to ui
-        displayedDate: new Date(), // move to ui
-        history: {},
+      routines: [],
+      history: {},
+      form: {},
+      ui: {
+        timeBlock: null,
+        displayedDate: new Date(),
+        activeRoutine: null,
       },
       restoreDefaultRoutines: action(state => {
-        state.routines.list = defaultRoutines;
+        state.routines = defaultRoutines;
       }),
       newRoutine: action((state, payload) => {
-        state.routines.list.push(payload);
+        state.routines.push(payload);
       }),
       updateRoutine: action((state, payload) => {
-        state.routines.list = state.routines.list.map(item =>
+        state.routines = state.routines.map(item =>
           item.id === payload.id ? payload : item,
         );
       }),
       deleteRoutine: action((state, payload) => {
-        state.routines.list = state.routines.list.filter(
-          item => item.id !== payload,
-        );
+        state.routines = state.routines.filter(item => item.id !== payload);
       }),
       // Todo: rename update to set
-      updateActiveForm: action((state, payload) => {
-        state.forms.active = payload;
+      updateForm: action((state, payload) => {
+        state.form = payload;
       }),
       setActiveRoutine: action((state, routineId) => {
-        state.routines.active = routineId;
+        state.ui.activeRoutine = routineId;
       }),
       updateTimeBlock: action((state, blockId) => {
-        state.days.timeBlock = blockId;
+        state.ui.timeBlock = blockId;
       }),
       setDisplayedDate: action((state, date) => {
-        state.days.displayedDate = date;
+        state.ui.displayedDate = date;
       }),
       colorizeBlock: action((state, blockId) => {
-        state.days.history[blockId] = state.routines.active;
+        state.history[blockId] = state.ui.activeRoutine;
       }),
     },
-    {storage: asyncstorage},
+    {storage: asyncstorage, allow: ['routines', 'history']},
   ),
   {middleware: []},
 );

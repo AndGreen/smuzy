@@ -12,7 +12,7 @@ export const DayPicker = () => {
   const [pressed, setPressed] = useState(false);
   const [showIos, setShowIos] = useState(false);
   const [showAndroid, setShowAndroid] = useState(false);
-  const activeDate = useStoreState(state => state.days.displayedDate);
+  const displayedDate = useStoreState(state => state.ui.displayedDate);
   const setDisplayedDate = useStoreActions(state => state.setDisplayedDate);
 
   const onChange = (event, selectedDate) => {
@@ -34,7 +34,7 @@ export const DayPicker = () => {
         }}>
         <View style={tw`p-2 flex flex-row items-center`}>
           <Text style={tw`text-white text-base font-bold`}>
-            {getFormattedDate(activeDate)}
+            {getFormattedDate(displayedDate)}
           </Text>
           <Ionicons
             name={pressed ? 'chevron-up-outline' : 'chevron-down-outline'}
@@ -51,7 +51,7 @@ export const DayPicker = () => {
           visible={showIos}>
           <View>
             <DateTimePicker
-              value={activeDate}
+              value={displayedDate}
               mode="date"
               display="inline"
               style={tw`bg-zinc-900 w-full h-full`}

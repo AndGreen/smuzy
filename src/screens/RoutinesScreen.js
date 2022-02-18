@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import tw from 'twrnc';
 import {
   Button,
@@ -8,7 +8,7 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
-import {useStoreState, useStoreActions} from 'easy-peasy';
+import {useStoreState} from 'easy-peasy';
 import {Ionicons} from '@expo/vector-icons';
 
 export const routinesHeaderButtons = ({navigation}) => {
@@ -33,7 +33,7 @@ export const routinesHeaderButtons = ({navigation}) => {
 };
 
 export const RoutinesScreen = ({navigation}) => {
-  const routines = useStoreState(state => state.routines.list);
+  const routines = useStoreState(state => state.routines);
 
   return (
     <View style={tw`h-full`}>

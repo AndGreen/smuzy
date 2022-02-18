@@ -3,7 +3,7 @@ import {getTimeBlockId} from '../utils/time';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 
 export const TimeProvider = ({children}) => {
-  const currentTimeBlock = useStoreState(state => state.days.timeBlock);
+  const currentTimeBlock = useStoreState(state => state.ui.timeBlock);
   const updateTimeBlock = useStoreActions(state => state.updateTimeBlock);
   const [time, setTime] = useState(Date.now());
 

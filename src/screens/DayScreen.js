@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import tw from 'twrnc';
 import {Pressable, Text, View} from 'react-native';
-import {useStoreState} from 'easy-peasy';
 import {DayGrid} from '../components/DayGrid';
-import {Ionicons} from '@expo/vector-icons';
-import {RoutinesList} from "../components/RoutinesList";
+import {RoutinesList} from '../components/RoutinesList';
 
 export const DayScreen = ({navigation}) => {
   return (

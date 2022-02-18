@@ -27,10 +27,10 @@ const getColorListByRoutines = routines => {
 };
 
 export const DayGrid = () => {
-  const routines = useStoreState(state => state.routines.list);
-  const timeBlock = useStoreState(state => state.days.timeBlock);
-  const displayedDate = useStoreState(state => state.days.displayedDate);
-  const history = useStoreState(state => state.days.history);
+  const routines = useStoreState(state => state.routines);
+  const timeBlock = useStoreState(state => state.ui.timeBlock);
+  const displayedDate = useStoreState(state => state.ui.displayedDate);
+  const history = useStoreState(state => state.history);
 
   const colorizeBlock = useStoreActions(state => state.colorizeBlock);
   const dayFirstBlockId = getDayFirstBlockId(displayedDate);
