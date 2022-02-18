@@ -29,14 +29,13 @@ export const store = createStore(
       deleteRoutine: action((state, payload) => {
         state.routines = state.routines.filter(item => item.id !== payload);
       }),
-      // Todo: rename update to set
-      updateForm: action((state, payload) => {
+      setForm: action((state, payload) => {
         state.form = payload;
       }),
       setActiveRoutine: action((state, routineId) => {
         state.ui.activeRoutine = routineId;
       }),
-      updateTimeBlock: action((state, blockId) => {
+      setTimeBlock: action((state, blockId) => {
         state.ui.timeBlock = blockId;
       }),
       setDisplayedDate: action((state, date) => {

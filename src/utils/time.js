@@ -7,16 +7,15 @@ import {
   startOfDay,
 } from 'date-fns';
 
-export const blockDurationMinutes = 20;
-export const timezoneOffset = -new Date().getTimezoneOffset() * 60;
+export const blockDuration = 20 * 60;
+export const timezoneBlockOffset = -new Date().getTimezoneOffset() / blockDuration * 60;
 
-export const getBlockId = date =>
-  Math.floor(getUnixTime(date) / (blockDurationMinutes * 60));
+export const getBlockId = date => Math.floor(getUnixTime(date) / blockDuration);
 
 export const getDayFirstBlockId = date =>
-  getBlockId(startOfDay(date)) + timezoneOffset;
+  getBlockId(startOfDay(date)) + timezoneBlockOffset;
 
-export const getTimeBlockId = () => getBlockId(new Date()) + timezoneOffset;
+export const getTimeBlockId = () => getBlockId(new Date()) + timezoneBlockOffset;
 
 export const getFormattedDate = date => {
   if (isToday(date)) return 'today';

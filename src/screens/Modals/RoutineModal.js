@@ -45,13 +45,13 @@ export const routineModalHeaderButtons = ({navigation, route}) => ({
 export const RoutineModal = ({route, navigation}) => {
   const {isNew, ...params} = route.params;
   const form = useStoreState(state => state.form);
-  const updateForm = useStoreActions(state => state.updateForm);
+  const setForm = useStoreActions(state => state.setForm);
   const deleteRoutine = useStoreActions(state => state.deleteRoutine);
 
   useEffect(() => {
-    updateForm(params);
+    setForm(params);
     return () => {
-      updateForm({});
+      setForm({});
     };
   }, []);
 
@@ -71,7 +71,7 @@ export const RoutineModal = ({route, navigation}) => {
             placeholder="Routine name"
             style={tw`dark:text-white h-10 w-full dark:bg-zinc-800 bg-gray-200 pl-2 rounded-lg`}
             onChangeText={value => {
-              updateForm({...form, title: value});
+              setForm({...form, title: value});
             }}
             value={form.title}
           />
@@ -80,7 +80,7 @@ export const RoutineModal = ({route, navigation}) => {
           <ColorPicker
             activeColor={form.color}
             setActiveColor={value => {
-              updateForm({...form, color: value});
+              setForm({...form, color: value});
             }}
           />
         </View>

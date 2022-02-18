@@ -62,7 +62,7 @@ export const DayPicker = () => {
       )}
 
       {isAndroid && showAndroid && (
-        <DateTimePicker value={activeDate} mode="date" onChange={onChange} />
+        <DateTimePicker value={displayedDate} mode="date" onChange={onChange} />
       )}
     </View>
   );
