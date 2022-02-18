@@ -1,7 +1,7 @@
 import {Pressable, Text, View} from 'react-native';
 import tw from 'twrnc';
 import {Ionicons} from '@expo/vector-icons';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 
 export const RoutinesList = ({navigation}) => {

@@ -11,15 +11,3 @@ export const asyncstorage = {
     await AsyncStorage.removeItem(key);
   },
 };
-
-export const consoleStorage = {
-  getItem: key => {
-    console.log('GET_ITEM', key);
-  },
-  setItem: (key, value) => {
-    console.log('SET_ITEM', key, value);
-  },
-  removeItem: key => {
-    console.log('REMOVE_ITEM', key);
-  },
-};

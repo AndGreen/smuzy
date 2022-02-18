@@ -4,16 +4,12 @@ import {
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import {Ionicons} from '@expo/vector-icons';
-import {routinesHeaderButtons, RoutinesScreen} from '../screens/RoutinesScreen';
 import {DayScreen} from '../screens/DayScreen';
-import {Button, useColorScheme, View} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {useColorScheme} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {RoutineModal, routineModalHeaderButtons} from '../screens/Modals/RoutineModal';
 import {StatusBar} from 'expo-status-bar';
 import {DayPicker} from '../components/DayPicker';
-import {useStoreActions} from 'easy-peasy';
 
 const Stack = createStackNavigator();
 

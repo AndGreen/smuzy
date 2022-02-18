@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, Pressable, Button, TextInput} from 'react-native';
 import uuid from 'react-native-uuid';
 import tw from 'twrnc';
@@ -31,8 +31,7 @@ export const routineModalHeaderButtons = ({navigation, route}) => ({
                 id: uuid.v4(),
                 ...form,
               });
-            } else
-              updateRoutine(form);
+            } else updateRoutine(form);
             navigation.goBack();
           }}
           title="Save"

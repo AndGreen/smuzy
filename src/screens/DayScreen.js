@@ -1,6 +1,6 @@
 import React from 'react';
 import tw from 'twrnc';
-import {Pressable, Text, View} from 'react-native';
+import {View} from 'react-native';
 import {DayGrid} from '../components/DayGrid';
 import {RoutinesList} from '../components/RoutinesList';
 
