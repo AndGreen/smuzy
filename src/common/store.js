@@ -8,15 +8,15 @@ export const store = createStore(
   persist(
     {
       routines: {
-        active: null,
+        active: null, // move to ui
         list: [],
       },
       forms: {
-        active: {},
+        active: {}, // move to ui
       },
       days: {
-        timeBlock: null,
-        displayedDate: new Date(),
+        timeBlock: null, // move to ui
+        displayedDate: new Date(), // move to ui
         history: {},
       },
       restoreDefaultRoutines: action(state => {

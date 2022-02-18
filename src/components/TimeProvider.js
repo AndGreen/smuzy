@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {getTimeBlockId} from '../utils/time';
-import {useStoreActions} from 'easy-peasy';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 
 export const TimeProvider = ({children}) => {
-  const updateTimeBlock = useStoreActions(
-    state => state.updateTimeBlock,
-  );
+  const currentTimeBlock = useStoreState(state => state.days.timeBlock);
+  const updateTimeBlock = useStoreActions(state => state.updateTimeBlock);
   const [time, setTime] = useState(Date.now());
 
   useEffect(() => {
@@ -17,7 +16,8 @@ export const TimeProvider = ({children}) => {
   }, []);
 
   useEffect(() => {
-    updateTimeBlock(getTimeBlockId());
+    const newTimeBlock = getTimeBlockId();
+    if (newTimeBlock !== currentTimeBlock) updateTimeBlock(newTimeBlock);
   }, [time]);
 
   // useEffect(() => {}, [])
