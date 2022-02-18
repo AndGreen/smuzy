@@ -2,7 +2,7 @@ import React from 'react';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 import {View, Text, Pressable} from 'react-native';
 import tw from 'twrnc';
-import {getDayFirstBlockId} from '../utils/time';
+import {getDayFirstBlockId, timezoneBlockOffset} from '../utils/time';
 import * as Haptics from 'expo-haptics';
 
 const lines = [
