@@ -1,6 +1,6 @@
 import React from 'react';
 import {useStoreActions, useStoreState} from 'easy-peasy';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text, Pressable, StyleSheet} from 'react-native';
 import tw from 'twrnc';
 import {getDayFirstBlockId} from '../utils/time';
 import * as Haptics from 'expo-haptics';
@@ -10,6 +10,29 @@ import {
   State,
 } from 'react-native-gesture-handler';
 import {subDays, addDays} from 'date-fns';
+import Svg, {
+  Circle,
+  Ellipse,
+  G,
+  TSpan,
+  TextPath,
+  Path,
+  Polygon,
+  Polyline,
+  Line,
+  Rect,
+  Use,
+  Image,
+  Symbol,
+  Defs,
+  LinearGradient,
+  RadialGradient,
+  Stop,
+  ClipPath,
+  Pattern,
+  Mask,
+} from 'react-native-svg';
+import {FuturePattern} from './FuturePattern';
 
 const lines = [
   '00:00',
@@ -90,13 +113,15 @@ export const DayGrid = () => {
                             Haptics.ImpactFeedbackStyle.Light,
                           );
                         }}
+                        style={tw`z-20`}
                         key={blockId}>
+                        {blockId > timeBlock && blockColor && <FuturePattern />}
                         <View
                           style={tw`border ${
                             bordersLWidth() + ' ' + borderTWidth
-                          } dark:border-black w-10 h-10 ${
+                          } dark:border-black w-10 h-10 z-0 ${
                             timeBlock === blockId &&
-                            'border-2 border-t-2 border-l-2 dark:border-white'
+                            'border-2 border-t-2 border-l-2 dark:border-white z-20'
                           } ${blockColor && `bg-[${blockColor}]`}`}
                         />
                       </Pressable>
