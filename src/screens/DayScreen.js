@@ -7,7 +7,7 @@ import {RoutinesList} from '../components/RoutinesList';
 export const DayScreen = ({navigation}) => {
   return (
     <View style={tw`flex w-full h-full`}>
-      <View style={tw`mb-5 bg-zinc-800`}>
+      <View style={tw`mb-5 p-4 pl-2 bg-zinc-800`}>
         <DayGrid />
       </View>
 

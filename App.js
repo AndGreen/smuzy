@@ -2,7 +2,7 @@ import React from 'react';
 import {StoreProvider} from 'easy-peasy';
 import {store} from './src/common/store';
 import tw, {useDeviceContext} from 'twrnc';
-import {Navigation} from './src/common/navigation';
+import {Navigation} from './src/screens/Navigation';
 import {TimeProvider} from './src/components/Providers/TimeProvider';
 import {AppStateProvider} from './src/components/Providers/AppStateProvider';
 
