@@ -24,8 +24,8 @@ const Main = () => {
       screenOptions={({route}) => ({
         tabBarIcon: ({color, size}) => {
           const icons = {
-            About: 'cafe-outline',
-            Day: 'calendar-outline',
+            About: 'help-circle',
+            Day: 'cafe',
           };
           return (
             <Ionicons name={icons[route.name]} size={size} color={color} />
