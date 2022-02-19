@@ -7,7 +7,11 @@ import {
 import {DayScreen} from '../screens/DayScreen';
 import {useColorScheme} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {RoutineModal, routineModalHeaderButtons} from '../screens/Modals/RoutineModal';
+import {
+  RoutineModal,
+  routineModalHeaderButtons,
+} from '../screens/Modals/RoutineModal';
+import {CalendarModal} from '../screens/Modals/CalendarModal';
 import {StatusBar} from 'expo-status-bar';
 import {DayPicker} from '../components/DayPicker';
 
@@ -24,9 +28,9 @@ export const Navigation = () => {
           <Stack.Screen
             name="Today"
             component={DayScreen}
-            options={{
-              headerTitle: () => <DayPicker />
-            }}
+            options={({navigation}) => ({
+              headerTitle: () => <DayPicker navigation={navigation} />,
+            })}
           />
           <Stack.Group screenOptions={{presentation: 'modal'}}>
             <Stack.Screen
@@ -35,6 +39,14 @@ export const Navigation = () => {
               options={props => ({
                 title: 'Edit Routine',
                 ...routineModalHeaderButtons(props),
+              })}
+            />
+            <Stack.Screen
+              name="CalendarModal"
+              component={CalendarModal}
+              options={props => ({
+                title: 'Calendar',
+                headerShown: false,
               })}
             />
           </Stack.Group>
