@@ -4,6 +4,12 @@ import {View, Text, Pressable} from 'react-native';
 import tw from 'twrnc';
 import {getDayFirstBlockId} from '../utils/time';
 import * as Haptics from 'expo-haptics';
+import {
+  FlingGestureHandler,
+  Directions,
+  State,
+} from 'react-native-gesture-handler';
+import {subDays, addDays} from 'date-fns';
 
 const lines = [
   '00:00',
@@ -32,55 +38,76 @@ export const DayGrid = () => {
   const displayedDate = useStoreState(state => state.ui.displayedDate);
   const history = useStoreState(state => state.history);
 
+  const setDisplayedDate = useStoreActions(state => state.setDisplayedDate);
   const colorizeBlock = useStoreActions(state => state.colorizeBlock);
   const dayFirstBlockId = getDayFirstBlockId(displayedDate);
   const colorsByRoutine = getColorListByRoutines(routines);
 
   return (
-    <View style={tw`w-full flex items-center`}>
-      <View style={tw`w-full rounded-lg`}>
-        {lines.map((lineLabel, lineNum) => (
-          <View
-            style={tw`flex flex-row items-center`}
-            key={`day-line-${lineNum}`}>
-            <Text style={tw`text-xs dark:text-gray-500 w-1/11 text-right mr-2`}>
-              {lineLabel}
-            </Text>
-            <View style={tw`flex flex-row`}>
-              {elements.map((_, i) => {
-                const blockId =
-                  dayFirstBlockId + (lineNum * elements.length + i);
-                const blockColor = colorsByRoutine[history[blockId]];
+    <FlingGestureHandler
+      direction={Directions.LEFT}
+      onHandlerStateChange={({nativeEvent}) => {
+        if (nativeEvent.state === State.ACTIVE) {
+          setDisplayedDate(addDays(displayedDate, 1));
+        }
+      }}>
+      <FlingGestureHandler
+        direction={Directions.RIGHT}
+        onHandlerStateChange={({nativeEvent}) => {
+          if (nativeEvent.state === State.ACTIVE) {
+            setDisplayedDate(subDays(displayedDate, 1));
+          }
+        }}>
+        <View style={tw`w-full flex items-center p-4 pl-2 `}>
+          <View style={tw`w-full rounded-lg`}>
+            {lines.map((lineLabel, lineNum) => (
+              <View
+                style={tw`flex flex-row items-center`}
+                key={`day-line-${lineNum}`}>
+                <Text
+                  style={tw`text-xs dark:text-gray-500 w-1/11 text-right mr-2`}>
+                  {lineLabel}
+                </Text>
+                <View style={tw`flex flex-row`}>
+                  {elements.map((_, i) => {
+                    const blockId =
+                      dayFirstBlockId + (lineNum * elements.length + i);
+                    const blockColor = colorsByRoutine[history[blockId]];
 
-                const bordersLWidth = () => {
-                  if (i === 0) return 'border-l';
-                  else if (i === 3 || i === 6) return 'border-l-2';
-                  else return 'border-l-0';
-                };
-                const borderTWidth = lineNum === 0 ? 'border-t' : 'border-t-0';
+                    const bordersLWidth = () => {
+                      if (i === 0) return 'border-l';
+                      else if (i === 3 || i === 6) return 'border-l-2';
+                      else return 'border-l-0';
+                    };
+                    const borderTWidth =
+                      lineNum === 0 ? 'border-t' : 'border-t-0';
 
-                return (
-                  <Pressable
-                    onPress={() => {
-                      colorizeBlock(blockId);
-                      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    }}
-                    key={blockId}>
-                    <View
-                      style={tw`border ${
-                        bordersLWidth() + ' ' + borderTWidth
-                      } dark:border-black w-10 h-10 ${
-                        timeBlock === blockId &&
-                        'border-2 border-t-2 border-l-2 dark:border-white'
-                      } ${blockColor && `bg-[${blockColor}]`}`}
-                    />
-                  </Pressable>
-                );
-              })}
-            </View>
+                    return (
+                      <Pressable
+                        onPress={() => {
+                          colorizeBlock(blockId);
+                          Haptics.impactAsync(
+                            Haptics.ImpactFeedbackStyle.Light,
+                          );
+                        }}
+                        key={blockId}>
+                        <View
+                          style={tw`border ${
+                            bordersLWidth() + ' ' + borderTWidth
+                          } dark:border-black w-10 h-10 ${
+                            timeBlock === blockId &&
+                            'border-2 border-t-2 border-l-2 dark:border-white'
+                          } ${blockColor && `bg-[${blockColor}]`}`}
+                        />
+                      </Pressable>
+                    );
+                  })}
+                </View>
+              </View>
+            ))}
           </View>
-        ))}
-      </View>
-    </View>
+        </View>
+      </FlingGestureHandler>
+    </FlingGestureHandler>
   );
 };
