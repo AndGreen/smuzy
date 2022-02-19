@@ -20,8 +20,10 @@ export const getTimeBlockId = () =>
   getBlockId(new Date()) + timezoneBlockOffset;
 
 export const getFormattedDate = date => {
-  if (isToday(date)) return 'today';
-  if (isTomorrow(date)) return 'tomorrow';
-  if (isYesterday(date)) return 'yesterday';
-  return format(date, 'MM/dd/yy');
+  let result;
+  if (isToday(date)) result = 'today';
+  if (isTomorrow(date)) result = 'tomorrow';
+  if (isYesterday(date)) result = 'yesterday';
+  if (!result) result = format(date, 'MM/dd/yy');
+  return `${result} - ${format(date, 'EE').toLowerCase()}`;
 };
