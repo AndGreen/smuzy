@@ -16,23 +16,8 @@ export const defaultRoutines = [
   },
   {
     color: '#667D8A',
-    title: 'meetings',
+    title: 'work',
     id: 'f53c267e-d269-40be-84b3-99bba9c3e3fd',
-  },
-  {
-    id: '9e241465-3d88-44f0-a678-b61727032df1',
-    title: 'walking',
-    color: '#D73965',
-  },
-  {
-    color: '#67AC5C',
-    title: 'studies code',
-    id: '635951c5-d9dc-4e3a-a737-e1d4315d9f9f',
-  },
-  {
-    title: 'smuzy project',
-    color: '#4154AF',
-    id: '822cf480-f463-4a95-862e-70d270198360',
   },
   {
     id: '836cd253-bc75-421f-aabf-fa71cac0365e',

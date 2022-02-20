@@ -7,7 +7,7 @@ window.requestIdleCallback = null;
 export const store = createStore(
   persist(
     {
-      routines: [],
+      routines: defaultRoutines,
       history: {},
       form: {},
       ui: {
