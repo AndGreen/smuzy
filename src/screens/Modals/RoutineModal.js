@@ -69,7 +69,7 @@ export const RoutineModal = ({route, navigation}) => {
             autoCapitalize="none"
             clearButtonMode="while-editing"
             placeholder="Routine name"
-            style={tw`dark:text-white w-full text-base dark:bg-zinc-800 bg-gray-200 p-2 pb-3 rounded-lg`}
+            style={tw`dark:text-white w-full leading-tight text-base dark:bg-zinc-800 bg-gray-200 p-3 rounded-lg`}
             onChangeText={value => {
               setForm({...form, title: value});
             }}
