@@ -19,7 +19,7 @@ export const CalendarModal = ({navigation}) => {
         value={displayedDate}
         mode="date"
         display="inline"
-        style={tw`bg-zinc-900 w-full h-full`}
+        style={tw`dark:bg-zinc-900 w-full h-full`}
         onChange={onChange}
       />
     </View>

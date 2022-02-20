@@ -14,11 +14,13 @@ import {RoutineModal, routineModalHeaderButtons} from './Modals/RoutineModal';
 import {CalendarModal} from './Modals/CalendarModal';
 import {DayPicker} from '../components/DayPicker';
 import {Ionicons} from '@expo/vector-icons';
+import {useIsDark} from '../utils/hooks';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
+  const isDark = useIsDark();
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -27,11 +29,9 @@ const Main = () => {
             About: 'help-circle',
             Day: 'cafe',
           };
-          return (
-            <Ionicons name={icons[route.name]} size={size} color={color} />
-          );
+          return <Ionicons name={icons[route.name]} size={30} color={color} />;
         },
-        tabBarActiveTintColor: 'tomato',
+        tabBarActiveTintColor: isDark ? 'tomato' : '#0284c7',
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen
@@ -47,12 +47,11 @@ const Main = () => {
 };
 
 export const Navigation = () => {
-  const scheme = useColorScheme();
-  const isDarkTheme = scheme === 'dark';
+  const isDark = useIsDark();
   return (
     <>
-      <StatusBar style={isDarkTheme ? 'light' : 'dark'} />
-      <NavigationContainer theme={isDarkTheme ? DarkTheme : DefaultTheme}>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <NavigationContainer theme={isDark ? DarkTheme : DefaultTheme}>
         <Stack.Navigator>
           <Stack.Screen
             name="Main"

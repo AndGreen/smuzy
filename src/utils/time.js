@@ -16,6 +16,9 @@ export const getBlockId = date => Math.floor(getUnixTime(date) / blockDuration);
 export const getDayFirstBlockId = date =>
   getBlockId(startOfDay(date)) + timezoneBlockOffset;
 
+export const getBlockIdByNumInDay = (date, blockNum) =>
+  getDayFirstBlockId(date) + blockNum;
+
 export const getTimeBlockId = () =>
   getBlockId(new Date()) + timezoneBlockOffset;
 

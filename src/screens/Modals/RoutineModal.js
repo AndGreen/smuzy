@@ -65,6 +65,7 @@ export const RoutineModal = ({route, navigation}) => {
       <View style={tw`flex w-full items-center`}>
         <View style={tw`mb-5 w-11/12`}>
           <TextInput
+            placeholderTextColor="gray"
             autoCapitalize="none"
             clearButtonMode="while-editing"
             placeholder="Routine name"

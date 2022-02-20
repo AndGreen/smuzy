@@ -2,7 +2,7 @@ import React from 'react';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import tw from 'twrnc';
-import {getDayFirstBlockId} from '../utils/time';
+import {getBlockIdByNumInDay, getDayFirstBlockId} from '../utils/time';
 import * as Haptics from 'expo-haptics';
 import {
   FlingGestureHandler,
@@ -10,29 +10,8 @@ import {
   State,
 } from 'react-native-gesture-handler';
 import {subDays, addDays} from 'date-fns';
-import Svg, {
-  Circle,
-  Ellipse,
-  G,
-  TSpan,
-  TextPath,
-  Path,
-  Polygon,
-  Polyline,
-  Line,
-  Rect,
-  Use,
-  Image,
-  Symbol,
-  Defs,
-  LinearGradient,
-  RadialGradient,
-  Stop,
-  ClipPath,
-  Pattern,
-  Mask,
-} from 'react-native-svg';
 import {FuturePattern} from './FuturePattern';
+import {usePlatform} from '../utils/hooks';
 
 const lines = [
   '00:00',
@@ -63,8 +42,9 @@ export const DayGrid = () => {
 
   const setDisplayedDate = useStoreActions(state => state.setDisplayedDate);
   const colorizeBlock = useStoreActions(state => state.colorizeBlock);
-  const dayFirstBlockId = getDayFirstBlockId(displayedDate);
   const colorsByRoutine = getColorListByRoutines(routines);
+
+  const {isAndroid} = usePlatform();
 
   return (
     <FlingGestureHandler
@@ -81,29 +61,32 @@ export const DayGrid = () => {
             setDisplayedDate(subDays(displayedDate, 1));
           }
         }}>
-        <View style={tw`w-full flex items-center p-4 pl-2 `}>
+        <View style={tw`w-full flex p-3 pl-2`}>
           <View style={tw`w-full rounded-lg`}>
             {lines.map((lineLabel, lineNum) => (
               <View
                 style={tw`flex flex-row items-center`}
                 key={`day-line-${lineNum}`}>
                 <Text
-                  style={tw`text-xs dark:text-gray-500 w-1/11 text-right mr-2`}>
+                  style={tw`text-xs dark:text-gray-500 w-9 text-right mr-2`}>
                   {lineLabel}
                 </Text>
                 <View style={tw`flex flex-row`}>
                   {elements.map((_, i) => {
-                    const blockId =
-                      dayFirstBlockId + (lineNum * elements.length + i);
+                    const blockId = getBlockIdByNumInDay(
+                      displayedDate,
+                      lineNum * elements.length + i,
+                    );
+
                     const blockColor = colorsByRoutine[history[blockId]];
 
-                    const bordersLWidth = () => {
-                      if (i === 0) return 'border-l';
-                      else if (i === 3 || i === 6) return 'border-l-2';
-                      else return 'border-l-0';
+                    const getBorderSize = () => {
+                      const top = `border-t-${lineNum === 0 ? '' : '-0'}`;
+                      let left = `border-l${i === 0 ? '' : '-0'}`;
+                      if (i === 3 || i === 6)
+                        left = `border-l-2 ${isAndroid ? 'ml-[-1]' : ''}`;
+                      return `${top} ${left}`;
                     };
-                    const borderTWidth =
-                      lineNum === 0 ? 'border-t' : 'border-t-0';
 
                     return (
                       <Pressable
@@ -113,16 +96,18 @@ export const DayGrid = () => {
                             Haptics.ImpactFeedbackStyle.Light,
                           );
                         }}
-                        style={tw`z-20`}
+                        style={tw`flex z-20 items-center justify-center`}
                         key={blockId}>
                         {blockId > timeBlock && blockColor && <FuturePattern />}
+                        {blockId === timeBlock && (
+                          <View
+                            style={tw`absolute w-[9.5vw] h-[4.5vh] border-2 z-10 dark:border-white border-sky-500`}
+                          />
+                        )}
                         <View
-                          style={tw`border ${
-                            bordersLWidth() + ' ' + borderTWidth
-                          } dark:border-black w-10 h-10 z-0 ${
-                            timeBlock === blockId &&
-                            'border-2 border-t-2 border-l-2 dark:border-white z-20'
-                          } ${blockColor && `bg-[${blockColor}]`}`}
+                          style={tw`border border-zinc-800 dark:border-black w-[9.5vw] h-[4.5vh] ${
+                            blockColor && `bg-[${blockColor}]`
+                          } ${getBorderSize()}`}
                         />
                       </Pressable>
                     );

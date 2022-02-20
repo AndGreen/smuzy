@@ -13,6 +13,7 @@ export const RoutinesList = ({navigation}) => {
     <>
       <>
         {list?.map((routine, id) => {
+          const isChosen = routine.id === active;
           return (
             <Pressable
               key={`routine-${routine.id}`}
@@ -23,17 +24,25 @@ export const RoutinesList = ({navigation}) => {
                 });
               }}
               onPress={() => {
-                setActiveRoutine(routine.id !== active ? routine.id : null);
+                setActiveRoutine(!isChosen ? routine.id : null);
               }}
               style={tw`flex flex-row`}>
               <View
                 style={tw`flex flex-row items-center mr-3 ${
-                  routine.id === active ? 'bg-white' : 'bg-white/10'
-                } rounded-lg p-2 px-4 mb-4`}>
-                <View style={tw`w-4 h-4 bg-[${routine.color}] mr-2`} />
+                  isChosen
+                    ? 'dark:bg-white bg-sky-600'
+                    : 'dark:bg-zinc-900 bg-gray-100'
+                } rounded-lg p-2 px-4 mb-3`}>
+                <View
+                  style={tw`w-4 h-4 bg-[${routine.color}] mr-2 ${
+                    isChosen && ' border dark:border-0 border-white'
+                  }`}
+                />
                 <Text
                   style={tw`${
-                    routine.id === active ? 'text-black' : 'text-gray-300'
+                    isChosen
+                      ? 'dark:text-black text-white'
+                      : 'dark:text-gray-300 text-black'
                   } text-base text-center`}>
                   {routine.title}
                 </Text>
@@ -42,21 +51,23 @@ export const RoutinesList = ({navigation}) => {
           );
         })}
       </>
-      {!active && (
-        <Pressable
-          onPress={() => {
-            navigation.navigate('RoutineModal', {
-              isNew: true,
-            });
-          }}>
-          <View
-            style={tw`flex flex-row items-center mr-3 border border-white/10 rounded-lg px-2 pr-3 h-10 mb-4`}>
-            <Ionicons name="add-outline" size={25} style={tw`text-zinc-800`} />
-            <Text style={tw`text-gray-300 text-base text-center`}> New </Text>
-          </View>
-        </Pressable>
-      )}
-      {active && (
+
+      <Pressable
+        onPress={() => {
+          navigation.navigate('RoutineModal', {
+            isNew: true,
+          });
+        }}>
+        <View
+          style={tw`flex flex-row items-center mr-3 border border-zinc-200 dark:border-zinc-800  rounded-lg px-2 pr-3 h-10 mb-4`}>
+          <Ionicons name="add-outline" size={25} style={tw`text-zinc-800`} />
+          <Text style={tw`dark:text-gray-300 text-black text-base text-center`}>
+            New
+          </Text>
+        </View>
+      </Pressable>
+
+      {false && (
         <Pressable
           onPress={() => {
             setActiveRoutine(null);
