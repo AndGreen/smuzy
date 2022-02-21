@@ -26,7 +26,7 @@ const Main = () => {
       screenOptions={({route}) => ({
         tabBarIcon: ({color, size}) => {
           const icons = {
-            About: 'help-circle',
+            Settings: 'flask', //folder-open
             Day: 'cafe',
           };
           return <Ionicons name={icons[route.name]} size={30} color={color} />;
@@ -41,7 +41,7 @@ const Main = () => {
           headerTitle: () => <DayPicker navigation={navigation} />,
         })}
       />
-      <Tab.Screen name="About" component={AboutScreen} />
+      <Tab.Screen name="Settings" component={AboutScreen} />
     </Tab.Navigator>
   );
 };
