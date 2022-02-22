@@ -1,8 +1,8 @@
 import React from 'react';
 import {useStoreActions, useStoreState} from 'easy-peasy';
-import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import tw from 'twrnc';
-import {getBlockIdByNumInDay, getDayFirstBlockId} from '../utils/time';
+import {getBlockIdByNumInDay, getBlockRange} from '../utils/time';
 import * as Haptics from 'expo-haptics';
 import {
   FlingGestureHandler,
@@ -12,6 +12,7 @@ import {
 import {subDays, addDays} from 'date-fns';
 import {FuturePattern} from './FuturePattern';
 import {usePlatform} from '../utils/hooks';
+import {Ionicons} from '@expo/vector-icons';
 
 const lines = [
   '00:00',
@@ -37,11 +38,15 @@ const getColorListByRoutines = routines => {
 export const DayGrid = () => {
   const routines = useStoreState(state => state.routines);
   const timeBlock = useStoreState(state => state.ui.timeBlock);
+  const multipleBlock = useStoreState(state => state.ui.multipleBlock);
   const displayedDate = useStoreState(state => state.ui.displayedDate);
   const history = useStoreState(state => state.history);
 
   const setDisplayedDate = useStoreActions(state => state.setDisplayedDate);
-  const colorizeBlock = useStoreActions(state => state.colorizeBlock);
+  const setMultipleStartBlock = useStoreActions(
+    state => state.setMultipleStartBlock,
+  );
+  const colorizeBlocks = useStoreActions(state => state.colorizeBlocks);
   const colorsByRoutine = getColorListByRoutines(routines);
 
   const {isAndroid} = usePlatform();
@@ -88,15 +93,28 @@ export const DayGrid = () => {
                       return `${top} ${left}`;
                     };
 
+                    const getBlockColor = () =>
+                      blockColor ? `bg-[${blockColor}]` : '';
+
                     return (
                       <Pressable
                         onPress={() => {
-                          colorizeBlock(blockId);
+                          colorizeBlocks(
+                            multipleBlock
+                              ? getBlockRange(multipleBlock, blockId)
+                              : [blockId],
+                          );
+
                           Haptics.impactAsync(
                             Haptics.ImpactFeedbackStyle.Light,
                           );
                         }}
-                        style={tw`flex z-20 items-center justify-center`}
+                        onLongPress={() => {
+                          setMultipleStartBlock(
+                            blockColor && !multipleBlock ? blockId : null,
+                          );
+                        }}
+                        style={tw`flex items-center justify-center`}
                         key={blockId}>
                         {blockId > timeBlock && blockColor && <FuturePattern />}
                         {blockId === timeBlock && (
@@ -105,10 +123,17 @@ export const DayGrid = () => {
                           />
                         )}
                         <View
-                          style={tw`border border-zinc-800 dark:border-black w-[9.5vw] h-[4.5vh] ${
-                            blockColor && `bg-[${blockColor}]`
-                          } ${getBorderSize()}`}
-                        />
+                          style={tw`flex items-center justify-center 
+                          border border-zinc-800 dark:border-black w-[9.5vw] h-[4.5vh]
+                          ${getBlockColor()} ${getBorderSize()}`}>
+                          {blockId === multipleBlock && (
+                            <Ionicons
+                              name="copy-outline"
+                              size={25}
+                              style={tw`text-zinc-800`}
+                            />
+                          )}
+                        </View>
                       </Pressable>
                     );
                   })}

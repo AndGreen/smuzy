@@ -12,6 +12,7 @@ export const store = createStore(
       form: {},
       ui: {
         timeBlock: null,
+        multipleBlock: null,
         displayedDate: new Date(),
         activeRoutine: null,
       },
@@ -34,15 +35,33 @@ export const store = createStore(
       }),
       setActiveRoutine: action((state, routineId) => {
         state.ui.activeRoutine = routineId;
+        state.ui.multipleBlock = null;
       }),
       setTimeBlock: action((state, blockId) => {
         state.ui.timeBlock = blockId;
       }),
       setDisplayedDate: action((state, date) => {
         state.ui.displayedDate = date;
+        state.ui.multipleBlock = null;
       }),
-      colorizeBlock: action((state, blockId) => {
-        state.history[blockId] = state.ui.activeRoutine;
+      setMultipleStartBlock: action((state, blockId) => {
+        state.ui.multipleBlock = blockId;
+        state.ui.activeRoutine = blockId ? state.history[blockId] : null;
+      }),
+      colorizeBlocks: action((state, blockIdList) => {
+        const newHistoryObjects = blockIdList.reduce(
+          (newObjects, blockId) => ({
+            ...newObjects,
+            [blockId]: state.ui.activeRoutine,
+          }),
+          {},
+        );
+        state.history = {
+          ...state.history,
+          ...newHistoryObjects,
+        };
+        state.ui.multipleBlock = null;
+        if (blockIdList.length > 1) state.ui.activeRoutine = null;
       }),
     },
     {storage: asyncstorage, allow: ['routines', 'history']},

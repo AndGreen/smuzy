@@ -22,6 +22,14 @@ export const getBlockIdByNumInDay = (date, blockNum) =>
 export const getTimeBlockId = () =>
   getBlockId(new Date()) + timezoneBlockOffset;
 
+export const getBlockRange = (startBlockId, endBlockId) => {
+  const [start, end] =
+    startBlockId < endBlockId
+      ? [startBlockId, endBlockId]
+      : [endBlockId, startBlockId];
+  return [...new Array(end - start + 1)].map((_, i) => start + i);
+};
+
 export const getFormattedDate = date => {
   let result;
   if (isToday(date)) result = 'today';

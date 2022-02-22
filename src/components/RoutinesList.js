@@ -28,7 +28,7 @@ export const RoutinesList = ({navigation}) => {
               }}
               style={tw`flex flex-row`}>
               <View
-                style={tw`flex flex-row items-center mr-3 ${
+                style={tw`flex flex-row items-center h-10 mr-3 ${
                   isChosen
                     ? 'dark:bg-white bg-sky-600'
                     : 'dark:bg-zinc-900 bg-gray-100'
@@ -66,22 +66,6 @@ export const RoutinesList = ({navigation}) => {
           </Text>
         </View>
       </Pressable>
-
-      {false && (
-        <Pressable
-          onPress={() => {
-            setActiveRoutine(null);
-          }}>
-          <View style={tw`flex flex-row items-center rounded-lg h-10`}>
-            <Ionicons
-              name="close-outline"
-              size={25}
-              style={tw`text-zinc-800 mr-1`}
-            />
-            <Text style={tw`text-gray-300 text-base text-center`}>Cancel</Text>
-          </View>
-        </Pressable>
-      )}
     </>
   );
 };
