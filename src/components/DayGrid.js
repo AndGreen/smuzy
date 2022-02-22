@@ -37,6 +37,7 @@ const getColorListByRoutines = routines => {
 
 export const DayGrid = () => {
   const routines = useStoreState(state => state.routines);
+  const activeRoutine = useStoreState(state => state.ui.activeRoutine);
   const timeBlock = useStoreState(state => state.ui.timeBlock);
   const multipleBlock = useStoreState(state => state.ui.multipleBlock);
   const displayedDate = useStoreState(state => state.ui.displayedDate);
@@ -110,9 +111,8 @@ export const DayGrid = () => {
                           );
                         }}
                         onLongPress={() => {
-                          setMultipleStartBlock(
-                            blockColor && !multipleBlock ? blockId : null,
-                          );
+                          if (activeRoutine) colorizeBlocks([blockId]);
+                          setMultipleStartBlock(blockId);
                         }}
                         style={tw`flex items-center justify-center`}
                         key={blockId}>
@@ -130,7 +130,9 @@ export const DayGrid = () => {
                             <Ionicons
                               name="copy-outline"
                               size={25}
-                              style={tw`text-zinc-800`}
+                              style={tw`${
+                                blockColor ? 'text-zinc-800' : 'text-white'
+                              }`}
                             />
                           )}
                         </View>

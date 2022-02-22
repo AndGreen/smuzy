@@ -46,7 +46,7 @@ export const store = createStore(
       }),
       setMultipleStartBlock: action((state, blockId) => {
         state.ui.multipleBlock = blockId;
-        state.ui.activeRoutine = blockId ? state.history[blockId] : null;
+        state.ui.activeRoutine = state.history[blockId];
       }),
       colorizeBlocks: action((state, blockIdList) => {
         const newHistoryObjects = blockIdList.reduce(
