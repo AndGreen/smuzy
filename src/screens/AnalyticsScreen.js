@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react';
 import tw from 'twrnc';
 import {View, Text, FlatList} from 'react-native';
 import {useStoreState} from 'easy-peasy';
+import {sortBy} from 'lodash';
 import {useFocusEffect} from '@react-navigation/native';
 import {blocksToHours, getWeekRangeBlockId} from '../utils/time';
 
@@ -27,7 +28,7 @@ export const AnalyticsScreen = ({}) => {
         );
       }
     }
-
+    newAnalytics = sortBy(newAnalytics, 'blocks').reverse();
     setStatistic(newStatistics);
     setAnalytics(newAnalytics);
   };
