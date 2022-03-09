@@ -1,5 +1,4 @@
 import React from 'react';
-import {useColorScheme} from 'react-native';
 import {
   DarkTheme,
   DefaultTheme,
@@ -7,7 +6,7 @@ import {
 } from '@react-navigation/native';
 import {StatusBar} from 'expo-status-bar';
 import {DayScreen} from './DayScreen';
-import {AboutScreen} from './AboutScreen';
+import {AnalyticsScreen} from './AnalyticsScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RoutineModal, routineModalHeaderButtons} from './Modals/RoutineModal';
@@ -24,10 +23,10 @@ const Main = () => {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
-        tabBarIcon: ({color, size}) => {
+        tabBarIcon: ({color}) => {
           const icons = {
-            Settings: 'flask', //folder-open
-            Day: 'cafe',
+            Analytics: 'pie-chart',
+            Day: 'calendar',
           };
           return <Ionicons name={icons[route.name]} size={30} color={color} />;
         },
@@ -41,7 +40,9 @@ const Main = () => {
           headerTitle: () => <DayPicker navigation={navigation} />,
         })}
       />
-      <Tab.Screen name="Settings" component={AboutScreen} />
+      <Tab.Screen name="Analytics" component={AnalyticsScreen} options={() => ({
+        headerTitle: "This week"
+      })} />
     </Tab.Navigator>
   );
 };
@@ -70,7 +71,7 @@ export const Navigation = () => {
             <Stack.Screen
               name="CalendarModal"
               component={CalendarModal}
-              options={props => ({
+              options={() => ({
                 title: 'Calendar',
                 headerShown: false,
               })}
