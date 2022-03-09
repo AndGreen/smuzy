@@ -53,7 +53,7 @@ export const AnalyticsScreen = ({}) => {
               `flex-row justify-between bg-zinc-900`,
             )}>
             <View style={tw`flex flex-row pl-3 h-12 items-center`}>
-              <View style={tw`w-5 h-5 bg-[${item.color}]`} />
+              <View style={tw`rounded-full w-5 h-5 bg-[${item.color}]`} />
               <Text style={tw`border-b ml-3 text-black dark:text-zinc-200`}>
                 {item.title}
               </Text>
