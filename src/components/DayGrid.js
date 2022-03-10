@@ -68,7 +68,7 @@ export const DayGrid = () => {
           }
         }}>
         <View style={tw`w-full flex p-3 pl-2`}>
-          <View style={tw`w-full rounded-lg`}>
+          <View style={tw`w-full`}>
             {lines.map((lineLabel, lineNum) => (
               <View
                 style={tw`flex flex-row items-center`}
@@ -85,17 +85,6 @@ export const DayGrid = () => {
                     );
 
                     const blockColor = colorsByRoutine[history[blockId]];
-
-                    const getBorderSize = () => {
-                      const top = `border-t-${lineNum === 0 ? '' : '-0'}`;
-                      let left = `border-l${i === 0 ? '' : '-0'}`;
-                      if (i === 3 || i === 6)
-                        left = `border-l-2 ${isAndroid ? 'ml-[-1]' : ''}`;
-                      return `${top} ${left}`;
-                    };
-
-                    const getBlockColor = () =>
-                      blockColor ? `bg-[${blockColor}]` : '';
 
                     return (
                       <Pressable
@@ -119,13 +108,25 @@ export const DayGrid = () => {
                         {blockId > timeBlock && blockColor && <FuturePattern />}
                         {blockId === timeBlock && (
                           <View
-                            style={tw`absolute w-[9.5vw] h-[4.5vh] border-2 z-10 dark:border-white border-sky-500`}
+                            style={tw`absolute w-[9.5vw] h-[4.5vh] border-2 z-10
+                             dark:border-white border-sky-500`}
                           />
                         )}
                         <View
-                          style={tw`flex items-center justify-center 
-                          border border-zinc-500 dark:border-black w-[9.5vw] h-[4.5vh]
-                          ${getBlockColor()} ${getBorderSize()}`}>
+                          style={tw.style(
+                            `flex items-center justify-center 
+                              border border-zinc-500 dark:border-black 
+                              w-[9.5vw] h-[4.5vh] border-t-0 border-l-0`,
+                            blockColor && `bg-[${blockColor}]`,
+                            lineNum === 0 && 'border-t',
+                            i === 0 && 'border-l',
+                            (i === 3 || i === 6) &&
+                              `border-l-2 ${isAndroid ? 'ml-[-1]' : ''}`,
+                            lineNum === 0 && i === 0  && 'rounded-tl-lg',
+                            lineNum === 0 && i === (elements.length - 1) && 'rounded-tr-lg',
+                            (lineNum === lines.length - 1) && i === 0 && 'rounded-bl-lg',
+                            (lineNum === lines.length - 1) && i === (elements.length - 1) && 'rounded-br-lg'
+                          )}>
                           {blockId === multipleBlock && (
                             <Ionicons
                               name="copy-outline"
