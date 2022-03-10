@@ -42,7 +42,7 @@ export const AnalyticsScreen = ({}) => {
   return (
     <View style={tw`h-full`}>
       <FlatList
-        style={tw`flex-1 py-3 px-2`}
+        style={tw`flex-1 py-3 px-2 bg-white dark:bg-black`}
         data={analytics}
         renderItem={({item, index}) => (
           <View
@@ -50,7 +50,7 @@ export const AnalyticsScreen = ({}) => {
               index === 0 && 'rounded-t-lg',
               index !== routines.length - 1 && 'border-b',
               index === routines.length - 1 && 'rounded-b-lg',
-              `flex-row justify-between bg-zinc-900`,
+              `flex-row justify-between border-white dark:border-black bg-gray-100 dark:bg-zinc-900`,
             )}>
             <View style={tw`flex flex-row pl-3 h-12 items-center`}>
               <View style={tw`rounded-full w-5 h-5 bg-[${item.color}]`} />

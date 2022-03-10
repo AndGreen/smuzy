@@ -124,7 +124,7 @@ export const DayGrid = () => {
                         )}
                         <View
                           style={tw`flex items-center justify-center 
-                          border border-zinc-800 dark:border-black w-[9.5vw] h-[4.5vh]
+                          border border-zinc-500 dark:border-black w-[9.5vw] h-[4.5vh]
                           ${getBlockColor()} ${getBorderSize()}`}>
                           {blockId === multipleBlock && (
                             <Ionicons
