@@ -32,7 +32,7 @@ export const RoutinesList = ({navigation}) => {
                   isChosen
                     ? 'dark:bg-white bg-sky-600'
                     : 'dark:bg-zinc-900 bg-gray-100'
-                } rounded-lg p-2 px-4 mb-3`}>
+                } rounded-lg p-2 px-3 mb-3`}>
                 <View
                   style={tw`w-4 h-4 rounded-full bg-[${routine.color}] mr-2 ${
                     isChosen && ' border dark:border-0 border-white'
