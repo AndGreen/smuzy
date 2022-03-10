@@ -7,6 +7,7 @@ import {
 import {StatusBar} from 'expo-status-bar';
 import {DayScreen} from './DayScreen';
 import {AnalyticsScreen} from './AnalyticsScreen';
+import {SettingsScreen} from './SettingsScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RoutineModal, routineModalHeaderButtons} from './Modals/RoutineModal';
@@ -27,6 +28,7 @@ const Main = () => {
           const icons = {
             Analytics: 'pie-chart',
             Day: 'calendar',
+            Settings: 'settings-sharp',
           };
           return <Ionicons name={icons[route.name]} size={30} color={color} />;
         },
@@ -43,6 +45,7 @@ const Main = () => {
       <Tab.Screen name="Analytics" component={AnalyticsScreen} options={() => ({
         headerTitle: "This week"
       })} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
 };
