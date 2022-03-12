@@ -46,8 +46,8 @@ export const AnalyticsScreen = ({}) => {
       render={(item) => (
         <View style={tw`flex-row justify-between`}>
           <View style={tw`flex flex-row items-center`}>
-            <View style={tw`rounded-sm w-5 h-5 bg-[${item.color}]`} />
-            <Text style={tw`border-b ml-3 text-black dark:text-zinc-200`}>
+            <View style={tw`rounded-sm w-4 h-4 bg-[${item.color}]`} />
+            <Text style={tw`border-b ml-3 text-base text-black dark:text-zinc-200`}>
               {item.title}
             </Text>
           </View>
