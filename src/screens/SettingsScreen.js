@@ -15,7 +15,7 @@ export const SettingsScreen = () => {
         'Contact Support',
       ]}
       render={item => (
-        <Text style={tw`dark:text-zinc-200 text-base`}>{item}</Text>
+        <Text style={tw`dark:text-zinc-200 text-base`} key={item}>{item}</Text>
       )}
     />
   );
