@@ -71,6 +71,7 @@ export const RoutineModal = ({route, navigation}) => {
                 placeholderTextColor={
                   errors?.title ? tw.color('red-500') : 'gray'
                 }
+                maxLength={30}
                 autoCapitalize="none"
                 clearButtonMode="while-editing"
                 placeholder={
