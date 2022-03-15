@@ -10,7 +10,7 @@ import {AnalyticsScreen} from './AnalyticsScreen';
 import {SettingsScreen} from './SettingsScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {RoutineModal, routineModalHeaderButtons} from './Modals/RoutineModal';
+import {RoutineModal} from './Modals/RoutineModal';
 import {CalendarModal} from './Modals/CalendarModal';
 import {DayPicker} from '../components/DayPicker';
 import {Ionicons} from '@expo/vector-icons';
@@ -42,9 +42,13 @@ const Main = () => {
           headerTitle: () => <DayPicker navigation={navigation} />,
         })}
       />
-      <Tab.Screen name="Analytics" component={AnalyticsScreen} options={() => ({
-        headerTitle: "This week"
-      })} />
+      <Tab.Screen
+        name="Analytics"
+        component={AnalyticsScreen}
+        options={() => ({
+          headerTitle: 'This week',
+        })}
+      />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
@@ -66,9 +70,8 @@ export const Navigation = () => {
             <Stack.Screen
               name="RoutineModal"
               component={RoutineModal}
-              options={props => ({
+              options={() => ({
                 title: 'Edit Routine',
-                ...routineModalHeaderButtons(props),
               })}
             />
             <Stack.Screen

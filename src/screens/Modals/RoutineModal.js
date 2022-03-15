@@ -1,57 +1,52 @@
 import React, {useEffect} from 'react';
 import {View, Text, Pressable, Button, TextInput} from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
 import uuid from 'react-native-uuid';
 import tw from 'twrnc';
 import {ColorPicker} from '../../components/ColorPicker';
-import {useStoreActions, useStoreState} from 'easy-peasy';
-
-export const routineModalHeaderButtons = ({navigation, route}) => ({
-  headerLeft: () => (
-    <View style={tw`ml-2`}>
-      <Button
-        onPress={() => {
-          navigation.goBack();
-        }}
-        title="Cancel"
-      />
-    </View>
-  ),
-  headerRight: () => {
-    const {isNew} = route.params;
-    const form = useStoreState(state => state.form);
-    const newRoutine = useStoreActions(state => state.newRoutine);
-    const updateRoutine = useStoreActions(state => state.updateRoutine);
-
-    return (
-      <View style={tw`mr-2`}>
-        <Button
-          onPress={() => {
-            if (isNew) {
-              newRoutine({
-                id: uuid.v4(),
-                ...form,
-              });
-            } else updateRoutine(form);
-            navigation.goBack();
-          }}
-          title="Save"
-        />
-      </View>
-    );
-  },
-});
+import {useStoreActions} from 'easy-peasy';
 
 export const RoutineModal = ({route, navigation}) => {
   const {isNew, ...params} = route.params;
-  const form = useStoreState(state => state.form);
-  const setForm = useStoreActions(state => state.setForm);
   const deleteRoutine = useStoreActions(state => state.deleteRoutine);
+  const newRoutine = useStoreActions(state => state.newRoutine);
+  const updateRoutine = useStoreActions(state => state.updateRoutine);
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm({defaultValues: params});
+
+
+  const onSubmit = data => {
+    if (isNew) {
+      newRoutine({
+        id: uuid.v4(),
+        ...data,
+      });
+    } else updateRoutine({...params, ...data});
+    navigation.goBack();
+  };
 
   useEffect(() => {
-    setForm(params);
-    return () => {
-      setForm({});
-    };
+    navigation.setOptions({
+      headerLeft: () => (
+        <View style={tw`ml-2`}>
+          <Button
+            onPress={() => {
+              navigation.goBack();
+            }}
+            title="Cancel"
+          />
+        </View>
+      ),
+      headerRight: () => (
+        <View style={tw`mr-2`}>
+          <Button onPress={handleSubmit(onSubmit)} title="Save" />
+        </View>
+      ),
+    });
   }, []);
 
   useEffect(() => {
@@ -64,31 +59,62 @@ export const RoutineModal = ({route, navigation}) => {
     <View style={tw`flex h-full pt-5 items-center dark:bg-zinc-900`}>
       <View style={tw`flex w-full items-center`}>
         <View style={tw`mb-5 w-11/12`}>
-          <TextInput
-            placeholderTextColor="gray"
-            autoCapitalize="none"
-            clearButtonMode="while-editing"
-            placeholder="Routine name"
-            style={tw`dark:text-white w-full leading-tight text-base dark:bg-zinc-800 bg-gray-200 p-3 rounded-lg`}
-            onChangeText={value => {
-              setForm({...form, title: value});
+          <Controller
+            control={control}
+            name="title"
+            rules={{
+              required: true,
             }}
-            value={form.title}
+            render={({field: {onChange, onBlur, value}}) => (
+              <TextInput
+                placeholderTextColor={
+                  errors?.title ? tw.color('red-500') : 'gray'
+                }
+                autoCapitalize="none"
+                clearButtonMode="while-editing"
+                placeholder={
+                  errors?.title ? 'Routine name required' : 'Routine name'
+                }
+                style={tw.style(
+                  `dark:text-white w-full leading-tight text-base
+                  dark:bg-zinc-800 bg-gray-200 p-3 rounded-lg border border-transparent`,
+                  errors?.title && 'border-red-500 dark:border-red-500',
+                )}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
           />
         </View>
-        <View style={tw`mb-5`}>
-          <ColorPicker
-            activeColor={form.color}
-            setActiveColor={value => {
-              setForm({...form, color: value});
+        <View
+          style={tw.style(
+            `border border-transparent p-6 rounded-lg`,
+            errors?.color && 'border-red-500 dark:border-red-500',
+          )}>
+          <Controller
+            control={control}
+            name="color"
+            rules={{
+              required: true,
             }}
+            render={({field: {onChange, onBlur, value}}) => (
+              <ColorPicker
+                activeColor={value}
+                setActiveColor={value => {
+                  onChange(value);
+                }}
+              />
+            )}
           />
+          {errors?.color && (
+            <Text style={tw`text-red-500 text-base`}>Color required</Text>
+          )}
         </View>
         {!isNew && (
           <Pressable
-            style={tw`flex w-11/12 dark:bg-zinc-800 bg-gray-200 py-3 items-center rounded-lg`}
+            style={tw`mt-5 flex w-11/12 dark:bg-zinc-800 bg-gray-200 py-3 items-center rounded-lg`}
             onPress={() => {
-              deleteRoutine(form.id);
+              deleteRoutine(params.id);
               navigation.goBack();
             }}>
             <Text style={tw`text-red-500 text-base`}>Delete Routine</Text>

@@ -9,7 +9,6 @@ export const store = createStore(
     {
       routines: defaultRoutines,
       history: {},
-      form: {},
       ui: {
         timeBlock: null,
         multipleBlock: null,
@@ -29,9 +28,6 @@ export const store = createStore(
       }),
       deleteRoutine: action((state, payload) => {
         state.routines = state.routines.filter(item => item.id !== payload);
-      }),
-      setForm: action((state, payload) => {
-        state.form = payload;
       }),
       setActiveRoutine: action((state, routineId) => {
         state.ui.activeRoutine = routineId;
