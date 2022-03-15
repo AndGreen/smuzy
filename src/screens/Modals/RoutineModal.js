@@ -4,10 +4,11 @@ import {useForm, Controller} from 'react-hook-form';
 import uuid from 'react-native-uuid';
 import tw from 'twrnc';
 import {ColorPicker} from '../../components/ColorPicker';
-import {useStoreActions} from 'easy-peasy';
+import {useStoreActions, useStoreState} from 'easy-peasy';
 
 export const RoutineModal = ({route, navigation}) => {
   const {isNew, ...params} = route.params;
+  const routines = useStoreState(state => state.routines)
   const deleteRoutine = useStoreActions(state => state.deleteRoutine);
   const newRoutine = useStoreActions(state => state.newRoutine);
   const updateRoutine = useStoreActions(state => state.updateRoutine);
@@ -99,6 +100,7 @@ export const RoutineModal = ({route, navigation}) => {
             }}
             render={({field: {onChange, onBlur, value}}) => (
               <ColorPicker
+                routines={routines}
                 activeColor={value}
                 setActiveColor={value => {
                   onChange(value);
