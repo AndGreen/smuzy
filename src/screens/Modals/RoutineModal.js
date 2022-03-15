@@ -100,7 +100,7 @@ export const RoutineModal = ({route, navigation}) => {
             }}
             render={({field: {onChange, onBlur, value}}) => (
               <ColorPicker
-                routines={routines}
+                routines={routines.filter(item => item.color !== params.color)}
                 activeColor={value}
                 setActiveColor={value => {
                   onChange(value);
