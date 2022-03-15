@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "smuzy",
+    "name": "Smuzy",
     "slug": "smuzy",
-    "version": "0.0.9",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -21,7 +21,7 @@
       "bundleIdentifier": "com.andrgreen.smuzy"
     },
     "android": {
-      "versionCode": 9,
+      "versionCode": 10,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
