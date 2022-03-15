@@ -7,7 +7,7 @@ import {Ionicons} from '@expo/vector-icons';
 
 export const ColorPicker = ({activeColor, setActiveColor}) => {
   return (
-    <View style={tw`flex flex-row flex-wrap w-11/12`}>
+    <View style={tw`flex flex-row flex-wrap pl-3`}>
       {map(colors, color => {
         const isActive = activeColor === color;
         const borderColor = isActive ? 'border-white' : 'dark:border-zinc-800 border-white';

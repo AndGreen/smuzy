@@ -88,7 +88,7 @@ export const RoutineModal = ({route, navigation}) => {
         </View>
         <View
           style={tw.style(
-            `border border-transparent p-6 rounded-lg`,
+            `border w-11/12 border-transparent p-4 rounded-lg`,
             errors?.color && 'border-red-500 dark:border-red-500',
           )}>
           <Controller
@@ -107,7 +107,7 @@ export const RoutineModal = ({route, navigation}) => {
             )}
           />
           {errors?.color && (
-            <Text style={tw`text-red-500 text-base`}>Color required</Text>
+            <Text style={tw`text-red-500 text-base ml-3 mt-2`}>Color required</Text>
           )}
         </View>
         {!isNew && (

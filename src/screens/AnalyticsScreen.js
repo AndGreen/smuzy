@@ -47,17 +47,17 @@ export const AnalyticsScreen = ({}) => {
         <View style={tw`flex-row justify-between`}>
           <View style={tw`flex flex-row items-center`}>
             <View style={tw`rounded-full w-5 h-5 bg-[${item.color}]`} />
-            <Text style={tw`border-b ml-3 text-black dark:text-zinc-200`}>
+            <Text style={tw`ml-3 text-black dark:text-zinc-200`}>
               {item.title}
             </Text>
           </View>
 
           <View style={tw`flex flex-row items-center`}>
             <Text
-              style={tw`border-b text-black font-bold dark:text-zinc-200`}>
+              style={tw`text-black font-bold dark:text-zinc-200 no-underline`}>
               {blocksToHours(item.blocks || 0)}
             </Text>
-            <Text style={tw`border-b ml-4 w-8 text-black dark:text-zinc-400`}>
+            <Text style={tw`ml-4 w-8 text-black dark:text-zinc-400 no-underline`}>
               {item.blocks ? Math.floor((item.blocks / statistic) * 100) : 0}%
             </Text>
           </View>
