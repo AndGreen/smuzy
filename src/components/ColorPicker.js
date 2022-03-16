@@ -32,7 +32,7 @@ export const ColorPicker = ({routines, activeColor, setActiveColor}) => {
                 />
               )}
               {isUsed && (
-                <Ionicons name="close" size={25} style={tw`text-black/20 dark:text-white/20`} />
+                <Ionicons name="checkmark-outline" size={25} style={tw`text-black/20 dark:text-white/10`} />
               )}
             </View>
           </Pressable>
