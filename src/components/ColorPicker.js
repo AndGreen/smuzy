@@ -7,7 +7,7 @@ import {Ionicons} from '@expo/vector-icons';
 
 export const ColorPicker = ({routines, activeColor, setActiveColor}) => {
   return (
-    <View style={tw`flex flex-row flex-wrap pl-3`}>
+    <View style={tw`flex flex-row flex-wrap`}>
       {map(colors, color => {
         const isActive = activeColor === color;
         const isUsed = routines.find(item => item.color === color);
@@ -20,7 +20,7 @@ export const ColorPicker = ({routines, activeColor, setActiveColor}) => {
             }}>
             <View
               style={tw.style(
-                `w-14 h-14 rounded-full mr-3 mb-3 justify-center items-center`,
+                `w-13 h-13 rounded-full mr-3 mb-3 justify-center items-center`,
                 isActive && 'border-2 dark:border-white',
                 isUsed ? `bg-[${color}]/20 border-black` : `bg-[${color}]`,
               )}>
