@@ -32,23 +32,25 @@ export const AnalyticsScreen = ({}) => {
               </Text>
             </View>
 
-            <View style={tw`flex flex-row w-full items-center`}>
+            <View style={tw`flex flex-row items-center`}>
               <Text
                 style={tw`text-black w-14 font-bold dark:text-zinc-200 no-underline`}>
                 {itemBlocks ? blocksToHours(itemBlocks) : '-'}
               </Text>
-              {itemBlocks !== prevItemBlocks && (
-                <Text
-                  style={tw.style(
-                    `ml-3 text-zinc-400 no-underline`,
-                    itemBlocks > prevItemBlocks
-                      ? 'text-green-500'
-                      : 'text-red-500',
-                  )}>
-                  {itemBlocks > prevItemBlocks ? '+ ' : '- '}
-                  {blocksToHours(Math.abs(itemBlocks - prevItemBlocks))}
-                </Text>
-              )}
+              <View style={tw`w-20`}>
+                {itemBlocks !== prevItemBlocks && (
+                  <Text
+                    style={tw.style(
+                      `ml-3 no-underline`,
+                      itemBlocks > prevItemBlocks
+                        ? 'text-green-600'
+                        : 'text-zinc-500',
+                    )}>
+                    {itemBlocks > prevItemBlocks ? '+ ' : '- '}
+                    {blocksToHours(Math.abs(itemBlocks - prevItemBlocks))}
+                  </Text>
+                )}
+              </View>
             </View>
           </View>
         );

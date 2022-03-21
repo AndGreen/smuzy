@@ -8,7 +8,7 @@ import {useStoreActions, useStoreState} from 'easy-peasy';
 
 export const RoutineModal = ({route, navigation}) => {
   const {isNew, ...params} = route.params;
-  const routines = useStoreState(state => state.routines)
+  const routines = useStoreState(state => state.routines);
   const deleteRoutine = useStoreActions(state => state.deleteRoutine);
   const newRoutine = useStoreActions(state => state.newRoutine);
   const updateRoutine = useStoreActions(state => state.updateRoutine);
@@ -18,7 +18,6 @@ export const RoutineModal = ({route, navigation}) => {
     handleSubmit,
     formState: {errors},
   } = useForm({defaultValues: params});
-
 
   const onSubmit = data => {
     if (isNew) {
@@ -93,29 +92,36 @@ export const RoutineModal = ({route, navigation}) => {
             `border w-11/12 border-transparent p-4 rounded-lg`,
             errors?.color && 'border-red-500 dark:border-red-500',
           )}>
-          <Controller
-            control={control}
-            name="color"
-            rules={{
-              required: true,
-            }}
-            render={({field: {onChange, onBlur, value}}) => (
-              <ColorPicker
-                routines={routines.filter(item => item.color !== params.color)}
-                activeColor={value}
-                setActiveColor={value => {
-                  onChange(value);
-                }}
-              />
-            )}
-          />
+          <View style={tw`flex items-center`}>
+            <Controller
+              control={control}
+              name="color"
+              rules={{
+                required: true,
+              }}
+              render={({field: {onChange, onBlur, value}}) => (
+                <ColorPicker
+                  routines={routines.filter(
+                    item => item.color !== params.color,
+                  )}
+                  activeColor={value}
+                  setActiveColor={value => {
+                    onChange(value);
+                  }}
+                />
+              )}
+            />
+          </View>
           {errors?.color && (
-            <Text style={tw`text-red-500 text-base ml-3 mt-2`}>Color required</Text>
+            <Text style={tw`text-red-500 text-base ml-1 mt-1`}>
+              Color required
+            </Text>
           )}
         </View>
         {!isNew && (
           <Pressable
-            style={tw`mt-5 flex w-11/12 dark:bg-zinc-800 bg-gray-200 py-3 items-center rounded-lg`}
+            style={tw`name:removeButton mt-5 flex w-11/12 dark:bg-zinc-800
+             bg-gray-200 py-3 items-center rounded-lg`}
             onPress={() => {
               deleteRoutine(params.id);
               navigation.goBack();
