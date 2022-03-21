@@ -2,7 +2,7 @@ import React from 'react';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 import {View, Text, Pressable} from 'react-native';
 import tw from 'twrnc';
-import {getBlockIdByNumInDay, getBlockRange} from '../utils/time';
+import {getBlockIdByNumInDay, getBlockRange, getDayFirstBlockId} from '../utils/time';
 import * as Haptics from 'expo-haptics';
 import {
   FlingGestureHandler,
@@ -83,21 +83,24 @@ export const DayGrid = () => {
                       displayedDate,
                       lineNum * elements.length + i,
                     );
+                    const firstBlockId = getDayFirstBlockId(new Date());
 
                     const blockColor = colorsByRoutine[history[blockId]];
 
                     return (
                       <Pressable
                         onPress={() => {
-                          colorizeBlocks(
-                            multipleBlock
-                              ? getBlockRange(multipleBlock, blockId)
-                              : [blockId],
-                          );
+                          if (blockId >= firstBlockId) {
+                            colorizeBlocks(
+                              multipleBlock
+                                ? getBlockRange(multipleBlock, blockId)
+                                : [blockId],
+                            );
 
-                          Haptics.impactAsync(
-                            Haptics.ImpactFeedbackStyle.Light,
-                          );
+                            Haptics.impactAsync(
+                              Haptics.ImpactFeedbackStyle.Light,
+                            );
+                          }
                         }}
                         onLongPress={() => {
                           if (activeRoutine) colorizeBlocks([blockId]);
