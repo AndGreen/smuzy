@@ -27,21 +27,21 @@ export const AnalyticsScreen = ({}) => {
               <Text
                 numberOfLines={1}
                 ellipsizeMode="tail"
-                style={tw`ml-3 w-45 text-black dark:text-zinc-200`}>
+                style={tw`ml-3 w-40 text-black dark:text-zinc-200`}>
                 {item.title}
               </Text>
             </View>
 
             <View style={tw`flex flex-row items-center`}>
               <Text
-                style={tw`text-black w-14 font-bold dark:text-zinc-200 no-underline`}>
+                style={tw`text-black w-18 font-bold dark:text-zinc-200 no-underline`}>
                 {itemBlocks ? blocksToHours(itemBlocks) : '-'}
               </Text>
-              <View style={tw`w-20`}>
+              <View style={tw`w-18`}>
                 {itemBlocks !== prevItemBlocks && (
                   <Text
                     style={tw.style(
-                      `ml-3 no-underline`,
+                      `no-underline`,
                       itemBlocks > prevItemBlocks
                         ? 'text-green-600'
                         : 'text-zinc-500',
