@@ -9,26 +9,29 @@ import {
   startOfDay,
 } from 'date-fns';
 
-export const blockDuration = 20 * 60;
-export const timezoneBlockOffset =
-  (-new Date().getTimezoneOffset() / blockDuration) * 60;
+export const BLOCK_DURATION = 20 * 60;
+export const TIMEZONE_OFFSET =
+  (-new Date().getTimezoneOffset() / BLOCK_DURATION) * 60;
+export const FILE_TIME_FORMAT = 'MM_dd_yyyy';
 
-export const getBlockId = date => Math.floor(getUnixTime(date) / blockDuration);
+export const getFileTime = () => format(new Date(), FILE_TIME_FORMAT);
+
+export const getBlockId = date =>
+  Math.floor(getUnixTime(date) / BLOCK_DURATION);
 
 export const getDayFirstBlockId = date =>
-  getBlockId(startOfDay(date)) + timezoneBlockOffset;
+  getBlockId(startOfDay(date)) + TIMEZONE_OFFSET;
 
 export const getWeekRangeBlockId = date => {
-  const first = getBlockId(startOfWeek(date)) + timezoneBlockOffset;
-  const last = getBlockId(endOfWeek(date)) + timezoneBlockOffset;
+  const first = getBlockId(startOfWeek(date)) + TIMEZONE_OFFSET;
+  const last = getBlockId(endOfWeek(date)) + TIMEZONE_OFFSET;
   return [first, last];
 };
 
 export const getBlockIdByNumInDay = (date, blockNum) =>
   getDayFirstBlockId(date) + blockNum;
 
-export const getTimeBlockId = () =>
-  getBlockId(new Date()) + timezoneBlockOffset;
+export const getTimeBlockId = () => getBlockId(new Date()) + TIMEZONE_OFFSET;
 
 export const getBlockRange = (startBlockId, endBlockId) => {
   const [start, end] =
@@ -48,8 +51,8 @@ export const getFormattedDate = date => {
 };
 
 export const blocksToHours = blockCount => {
-  const blockInHour = (60 * 60) / blockDuration;
+  const blockInHour = (60 * 60) / BLOCK_DURATION;
   return `${Math.floor(blockCount / blockInHour)}h ${
-    (blockCount % blockInHour) * (blockDuration / 60)
+    (blockCount % blockInHour) * (BLOCK_DURATION / 60)
   }m`;
 };

@@ -1,17 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import tw from 'twrnc';
 import {View, Text} from 'react-native';
 import {useStoreState} from 'easy-peasy';
 import {blocksToHours} from '../utils/time';
 import {SelectList} from '../components/SelectList';
 import {useStatistic} from '../utils/hooks';
-import {lastDayOfWeek, subWeeks} from 'date-fns';
+import {
+  differenceInDays,
+  lastDayOfWeek,
+  previousSunday,
+  subWeeks,
+} from 'date-fns';
 import {sortBy} from 'lodash';
 
-export const AnalyticsScreen = ({}) => {
+export const AnalyticsScreen = ({navigation}) => {
   const routines = useStoreState(state => state.routines);
   const analytics = useStatistic(new Date());
   const prevAnalytics = useStatistic(lastDayOfWeek(subWeeks(new Date(), 1)));
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: `Week (${differenceInDays(
+        new Date(),
+        previousSunday(new Date()),
+      )}/7)`,
+    });
+  });
 
   return (
     <SelectList

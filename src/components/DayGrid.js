@@ -2,7 +2,11 @@ import React from 'react';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 import {View, Text, Pressable} from 'react-native';
 import tw from 'twrnc';
-import {getBlockIdByNumInDay, getBlockRange, getDayFirstBlockId} from '../utils/time';
+import {
+  getBlockIdByNumInDay,
+  getBlockRange,
+  getDayFirstBlockId,
+} from '../utils/time';
 import * as Haptics from 'expo-haptics';
 import {
   FlingGestureHandler,
@@ -104,7 +108,9 @@ export const DayGrid = () => {
                         }}
                         onLongPress={() => {
                           if (activeRoutine) colorizeBlocks([blockId]);
-                          setMultipleStartBlock(blockId);
+                          if (blockId >= firstBlockId) {
+                            setMultipleStartBlock(blockId);
+                          }
                         }}
                         style={tw`flex items-center justify-center`}
                         key={blockId}>
@@ -125,10 +131,16 @@ export const DayGrid = () => {
                             i === 0 && 'border-l',
                             (i === 3 || i === 6) &&
                               `border-l-2 ${isAndroid ? 'ml-[-1]' : ''}`,
-                            lineNum === 0 && i === 0  && 'rounded-tl-lg',
-                            lineNum === 0 && i === (elements.length - 1) && 'rounded-tr-lg',
-                            (lineNum === lines.length - 1) && i === 0 && 'rounded-bl-lg',
-                            (lineNum === lines.length - 1) && i === (elements.length - 1) && 'rounded-br-lg'
+                            lineNum === 0 && i === 0 && 'rounded-tl-lg',
+                            lineNum === 0 &&
+                              i === elements.length - 1 &&
+                              'rounded-tr-lg',
+                            lineNum === lines.length - 1 &&
+                              i === 0 &&
+                              'rounded-bl-lg',
+                            lineNum === lines.length - 1 &&
+                              i === elements.length - 1 &&
+                              'rounded-br-lg',
                           )}>
                           {blockId === multipleBlock && (
                             <Ionicons
