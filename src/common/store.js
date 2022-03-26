@@ -18,8 +18,9 @@ export const store = createStore(
       restoreDefaultRoutines: action(state => {
         state.routines = defaultRoutines;
       }),
-      restoreHistory: action((state, payload) => {
-        state.history = payload;
+      restoreBackup: action((state, {routines, history}) => {
+        state.routines = routines;
+        state.history = history;
       }),
       newRoutine: action((state, payload) => {
         state.routines.push(payload);
