@@ -146,9 +146,9 @@ export const DayGrid = () => {
                             <Ionicons
                               name="copy-outline"
                               size={25}
-                              style={tw`${
-                                blockColor ? 'text-zinc-800' : 'text-white'
-                              }`}
+                              style={tw.style(
+                                blockColor ? 'text-zinc-800' : 'text-white',
+                              )}
                             />
                           )}
                         </View>
