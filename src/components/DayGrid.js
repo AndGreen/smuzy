@@ -87,14 +87,14 @@ export const DayGrid = () => {
                       displayedDate,
                       lineNum * elements.length + i,
                     );
-                    const firstBlockId = getDayFirstBlockId(new Date());
-
+                    const isCanColorize =
+                      blockId >= getDayFirstBlockId(subDays(new Date(), 1));
                     const blockColor = colorsByRoutine[history[blockId]];
 
                     return (
                       <Pressable
                         onPress={() => {
-                          if (blockId >= firstBlockId) {
+                          if (isCanColorize) {
                             colorizeBlocks(
                               multipleBlock
                                 ? getBlockRange(multipleBlock, blockId)
@@ -108,7 +108,7 @@ export const DayGrid = () => {
                         }}
                         onLongPress={() => {
                           if (activeRoutine) colorizeBlocks([blockId]);
-                          if (blockId >= firstBlockId) {
+                          if (isCanColorize) {
                             setMultipleStartBlock(blockId);
                           }
                         }}
@@ -117,7 +117,7 @@ export const DayGrid = () => {
                         {blockId > timeBlock && blockColor && <FuturePattern />}
                         {blockId === timeBlock && (
                           <View
-                            style={tw`absolute w-[9.5vw] h-[4.5vh] border-2 z-10
+                            style={tw`absolute w-[9.5vw] h-[9.5vw] border-2 z-10
                              dark:border-white border-sky-500`}
                           />
                         )}
@@ -125,7 +125,7 @@ export const DayGrid = () => {
                           style={tw.style(
                             `flex items-center justify-center 
                               border border-zinc-500 dark:border-black 
-                              w-[9.5vw] h-[4.5vh] border-t-0 border-l-0`,
+                              w-[9.5vw] h-[9.5vw] border-t-0 border-l-0`,
                             blockColor && `bg-[${blockColor}]`,
                             lineNum === 0 && 'border-t',
                             i === 0 && 'border-l',
