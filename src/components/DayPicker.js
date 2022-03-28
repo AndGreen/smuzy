@@ -31,7 +31,7 @@ export const DayPicker = ({navigation}) => {
         }}>
         <View style={tw`p-2 flex flex-row items-center`}>
           <Text style={tw`dark:text-white text-zinc-800 text-base font-bold`}>
-            {getFormattedDate(displayedDate)}
+            🗓 {getFormattedDate(displayedDate)}
           </Text>
           <Ionicons
             name="chevron-down-outline"

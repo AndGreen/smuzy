@@ -20,7 +20,7 @@ export const AnalyticsScreen = ({navigation}) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: `Week (${differenceInDays(
+      headerTitle: `📈 Week (${differenceInDays(
         new Date(),
         previousSunday(new Date()),
       )}/7)`,

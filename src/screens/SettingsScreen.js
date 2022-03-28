@@ -20,13 +20,13 @@ export const SettingsScreen = () => {
     <SelectList
       items={[
         {
-          title: 'Backup to file',
+          title: '📤 Backup to file',
           onPress: () => {
             saveBackup();
           },
         },
         {
-          title: 'Restore backup',
+          title: '📥 Restore backup',
           onPress: () => {
             readBackup(data => {
               const parsedData = JSON.parse(data) || {};
