@@ -23,8 +23,9 @@ export const getDayFirstBlockId = date =>
   getBlockId(startOfDay(date)) + TIMEZONE_OFFSET;
 
 export const getWeekRangeBlockId = date => {
-  const first = getBlockId(startOfWeek(date)) + TIMEZONE_OFFSET;
-  const last = getBlockId(endOfWeek(date)) + TIMEZONE_OFFSET;
+  const first =
+    getBlockId(startOfWeek(date, {weekStartsOn: 1})) + TIMEZONE_OFFSET;
+  const last = getBlockId(endOfWeek(date, {weekStartsOn: 1})) + TIMEZONE_OFFSET;
   return [first, last];
 };
 
