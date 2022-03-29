@@ -12,6 +12,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {RoutineModal} from './Modals/RoutineModal';
 import {CalendarModal} from './Modals/CalendarModal';
+import {ColorModal} from './Modals/ColorModal';
 import {DayPicker} from '../components/DayPicker';
 import {Ionicons} from '@expo/vector-icons';
 import {useIsDark} from '../utils/hooks';
@@ -72,6 +73,13 @@ export const Navigation = () => {
               component={RoutineModal}
               options={() => ({
                 title: 'Edit Routine',
+              })}
+            />
+            <Stack.Screen
+              name="ColorModal"
+              component={ColorModal}
+              options={() => ({
+                title: 'Edit Color',
               })}
             />
             <Stack.Screen

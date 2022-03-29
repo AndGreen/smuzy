@@ -1,6 +1,7 @@
 import {createStore, action, persist} from 'easy-peasy';
 import {asyncstorage} from './asyncstorage';
 import {defaultRoutines} from '../constants/routines';
+import {colors} from './colors';
 
 window.requestIdleCallback = null;
 
@@ -8,6 +9,7 @@ export const store = createStore(
   persist(
     {
       routines: defaultRoutines,
+      ...colors,
       history: {},
       ui: {
         timeBlock: null,
@@ -15,12 +17,10 @@ export const store = createStore(
         displayedDate: new Date(),
         activeRoutine: null,
       },
-      restoreDefaultRoutines: action(state => {
-        state.routines = defaultRoutines;
-      }),
-      restoreBackup: action((state, {routines, history}) => {
+      restoreBackup: action((state, {routines, colors, history}) => {
         state.routines = routines;
         state.history = history;
+        state.colors = colors;
       }),
       newRoutine: action((state, payload) => {
         state.routines.push(payload);
@@ -64,7 +64,7 @@ export const store = createStore(
         if (blockIdList.length > 1) state.ui.activeRoutine = null;
       }),
     },
-    {storage: asyncstorage, allow: ['routines', 'history']},
+    {storage: asyncstorage, allow: ['routines', 'colors', 'history']},
   ),
   {middleware: []},
 );

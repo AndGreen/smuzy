@@ -9,10 +9,11 @@ import {useStoreActions, useStoreState} from 'easy-peasy';
 export const SettingsScreen = () => {
   const history = useStoreState(state => state.history);
   const routines = useStoreState(state => state.routines);
+  const colors = useStoreState(state => state.colors);
   const restoreBackup = useStoreActions(state => state.restoreBackup);
   const saveBackup = useSaveFile(
     `smuzy_${getFileTime()}.json`,
-    JSON.stringify({routines, history}),
+    JSON.stringify({routines, colors, history}),
   );
   const readBackup = useReadFile();
 
@@ -30,7 +31,11 @@ export const SettingsScreen = () => {
           onPress: () => {
             readBackup(data => {
               const parsedData = JSON.parse(data) || {};
-              if (parsedData.routines && parsedData.history) {
+              if (
+                parsedData.routines &&
+                parsedData.history &&
+                parsedData.colors
+              ) {
                 restoreBackup(parsedData);
                 Alert.alert('Done', 'Successful restored!');
               } else {
