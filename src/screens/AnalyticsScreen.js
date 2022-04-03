@@ -6,9 +6,7 @@ import {blocksToHours} from '../utils/time';
 import {SelectList} from '../components/SelectList';
 import {useStatistic} from '../utils/hooks';
 import {
-  differenceInDays,
-  lastDayOfWeek,
-  previousSunday,
+  getISODay,
   subWeeks,
 } from 'date-fns';
 import {sortBy} from 'lodash';
@@ -16,14 +14,11 @@ import {sortBy} from 'lodash';
 export const AnalyticsScreen = ({navigation}) => {
   const routines = useStoreState(state => state.routines);
   const analytics = useStatistic(new Date());
-  const prevAnalytics = useStatistic(lastDayOfWeek(subWeeks(new Date(), 1)));
+  const prevAnalytics = useStatistic(subWeeks(new Date(), 1));
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: `Week (${differenceInDays(
-        new Date(),
-        previousSunday(new Date()),
-      )}/7)`,
+      headerTitle: `Week (${getISODay(new Date())}/7)`,
     });
   });
 
