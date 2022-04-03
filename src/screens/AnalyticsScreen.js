@@ -18,7 +18,7 @@ export const AnalyticsScreen = ({navigation}) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: `Week (${getISODay(new Date())}/7)`,
+      headerTitle: `week (${getISODay(new Date())}/7)`,
     });
   });
 
