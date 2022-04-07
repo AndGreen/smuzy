@@ -1,10 +1,8 @@
 import React, {useMemo, useRef, useState} from 'react';
 import {Text, View} from 'react-native';
 import Animated from 'react-native-reanimated';
-
 import BottomSheet from '@gorhom/bottom-sheet';
 import tw from 'twrnc';
-
 import {Button} from '../components/Button';
 
 const CustomBackground = ({style}) => (
@@ -60,9 +58,9 @@ export const GoalsSheet = ({height, navigation}) => {
         <View style={tw`items-center mt-3`}>
           <Button
             onPress={() => {
-              // navigation.navigate('RoutineModal', {
-              //   isNew: true,
-              // });
+              navigation.navigate('GoalsModal', {
+                isNew: true,
+              });
             }}>
             New goals
           </Button>

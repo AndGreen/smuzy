@@ -1,15 +1,12 @@
 import React, {useEffect} from 'react';
-import tw from 'twrnc';
-import {View, Text} from 'react-native';
+import {Text, View} from 'react-native';
+import {getISODay, subWeeks} from 'date-fns';
 import {useStoreState} from 'easy-peasy';
-import {blocksToHours} from '../utils/time';
-import {SelectList} from '../components/SelectList';
-import {useStatistic} from '../utils/hooks';
-import {
-  getISODay,
-  subWeeks,
-} from 'date-fns';
 import {sortBy} from 'lodash';
+import tw from 'twrnc';
+import {SelectList} from '../../components/SelectList';
+import {useStatistic} from '../../utils/hooks';
+import {blocksToHours} from '../../utils/time';
 
 export const AnalyticsScreen = ({navigation}) => {
   const routines = useStoreState(state => state.routines);

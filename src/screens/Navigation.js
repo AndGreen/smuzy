@@ -1,21 +1,22 @@
-import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import {StatusBar} from 'expo-status-bar';
-import {DayScreen} from './DayScreen';
-import {AnalyticsScreen} from './AnalyticsScreen';
-import {SettingsScreen} from './SettingsScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {RoutineModal} from './Modals/RoutineModal';
+import React from 'react';
+import {Ionicons} from '@expo/vector-icons';
+import {StatusBar} from 'expo-status-bar';
+import {DayPicker} from '../components/DayPicker';
+import {useIsDark} from '../utils/hooks';
 import {CalendarModal} from './Modals/CalendarModal';
 import {ColorModal} from './Modals/ColorModal';
-import {DayPicker} from '../components/DayPicker';
-import {Ionicons} from '@expo/vector-icons';
-import {useIsDark} from '../utils/hooks';
+import {GoalsModal} from './Modals/GoalsModal';
+import {RoutineModal} from './Modals/RoutineModal';
+import {AnalyticsScreen} from './Screens/AnalyticsScreen';
+import {DayScreen} from './Screens/DayScreen';
+import {SettingsScreen} from './Screens/SettingsScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -88,6 +89,13 @@ export const Navigation = () => {
               options={() => ({
                 title: 'Calendar',
                 headerShown: false,
+              })}
+            />
+            <Stack.Screen
+              name="GoalsModal"
+              component={GoalsModal}
+              options={() => ({
+                title: 'Edit goals',
               })}
             />
           </Stack.Group>

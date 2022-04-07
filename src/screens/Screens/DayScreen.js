@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import tw from 'twrnc';
-import {DayGrid} from '../components/DayGrid';
-import {RoutinesList} from '../components/RoutinesList';
-import {GoalsSheet} from './GoalsSheet';
+import {DayGrid} from '../../components/DayGrid';
+import {RoutinesList} from '../../components/RoutinesList';
+import {GoalsSheet} from '../GoalsSheet';
 
 export const DayScreen = ({navigation}) => {
   const [height, setHeight] = useState(350);

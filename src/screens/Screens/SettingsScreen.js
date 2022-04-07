@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, Alert} from 'react-native';
-import {SelectList, Gap} from '../components/SelectList';
-import tw from 'twrnc';
-import {useReadFile, useSaveFile} from '../utils/hooks';
-import {getFileTime} from '../utils/time';
+import {Alert, Text} from 'react-native';
 import {useStoreActions, useStoreState} from 'easy-peasy';
+import tw from 'twrnc';
+import {Gap, SelectList} from '../../components/SelectList';
+import {useReadFile, useSaveFile} from '../../utils/hooks';
+import {getFileTime} from '../../utils/time';
 
 export const SettingsScreen = () => {
   const history = useStoreState(state => state.history);
