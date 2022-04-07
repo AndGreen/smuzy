@@ -1,6 +1,6 @@
-import {defaultColor} from '../constants/routines';
 import {action} from 'easy-peasy';
 import {values} from 'lodash';
+import {defaultColor} from '../../constants/routines';
 
 export const colors = {
   colors: values(defaultColor),

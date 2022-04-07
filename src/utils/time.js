@@ -1,12 +1,13 @@
 import {
-  format,
-  getUnixTime,
-  startOfWeek,
   endOfWeek,
+  format,
+  formatISO,
+  getUnixTime,
   isToday,
   isTomorrow,
   isYesterday,
   startOfDay,
+  startOfWeek,
 } from 'date-fns';
 
 export const BLOCK_DURATION = 20 * 60;
@@ -57,3 +58,5 @@ export const blocksToHours = blockCount => {
     (blockCount % blockInHour) * (BLOCK_DURATION / 60)
   }m`;
 };
+
+export const getISODate = date => formatISO(date, {representation: 'date'});

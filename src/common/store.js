@@ -1,7 +1,8 @@
-import {createStore, action, persist} from 'easy-peasy';
-import {asyncstorage} from './asyncstorage';
+import {action, createStore, persist} from 'easy-peasy';
 import {defaultRoutines} from '../constants/routines';
-import {colors} from './colors';
+import {asyncstorage} from './asyncstorage';
+import {colors} from './states/colors';
+import {goals} from './states/goals';
 
 window.requestIdleCallback = null;
 
@@ -10,6 +11,7 @@ export const store = createStore(
     {
       routines: defaultRoutines,
       ...colors,
+      ...goals,
       history: {},
       ui: {
         timeBlock: null,
@@ -64,7 +66,7 @@ export const store = createStore(
         if (blockIdList.length > 1) state.ui.activeRoutine = null;
       }),
     },
-    {storage: asyncstorage, allow: ['routines', 'colors', 'history']},
+    {storage: asyncstorage, allow: ['routines', 'colors', 'goals', 'history']},
   ),
   {middleware: []},
 );
