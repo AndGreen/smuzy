@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Pressable, Text, View} from 'react-native';
 import {useStoreActions, useStoreState} from 'easy-peasy';
-import {sortBy} from 'lodash';
+import {omit} from 'lodash';
 import tw from 'twrnc';
 import {SelectList} from '../../components/SelectList';
 import {blocksToHours, getISODate} from '../../utils/time';
@@ -70,7 +70,7 @@ export const GoalsModal = ({route, navigation}) => {
     <SelectList
       items={routines}
       render={routine => {
-        const itemGoal = newGoals[routine.id] || 0;
+        const itemGoal = newGoals?.[routine.id] || 0;
         return (
           <View style={tw`flex-row justify-between`}>
             <View style={tw`flex flex-row items-center`}>
@@ -87,7 +87,11 @@ export const GoalsModal = ({route, navigation}) => {
               <RoundButton
                 disabled={itemGoal - 1 < 0}
                 onPress={() => {
-                  setNewGoals({...newGoals, [routine.id]: itemGoal - 1});
+                  setNewGoals(
+                    itemGoal - 1 === 0
+                      ? omit(newGoals, [routine.id])
+                      : {...newGoals, [routine.id]: itemGoal - 1},
+                  );
                 }}>
                 -
               </RoundButton>

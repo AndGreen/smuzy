@@ -1,18 +1,24 @@
 import React from 'react';
+import {FlatList, Pressable, View} from 'react-native';
 import tw from 'twrnc';
-import {View, FlatList, Pressable} from 'react-native';
 
 export const Gap = Symbol('Gap');
 
-export const SelectList = ({items, render}) => {
+export const SelectList = ({
+  items,
+  render,
+  style,
+  itemStyle,
+  itemFirstStyle,
+}) => {
   return (
     <View style={tw`h-full`}>
       <FlatList
-        style={tw`flex-1 py-3 px-2 bg-white dark:bg-black`}
+        style={tw.style(`flex-1 py-3 px-2 bg-white dark:bg-black`, style)}
         data={items}
         keyExtractor={(item, index) => item.id || index}
         renderItem={({item, index}) => (
-          <Pressable onPress={item.onPress}>
+          <Pressable onPress={item.onPress} onLongPress={item.onLongPress}>
             <View
               style={tw.style(
                 `border-white dark:border-black bg-gray-100 dark:bg-zinc-900 
@@ -22,6 +28,9 @@ export const SelectList = ({items, render}) => {
                 (index === items.length - 1 || items[index + 1] === Gap) &&
                   'rounded-b-lg',
                 item === Gap && 'bg-white dark:bg-black h-3',
+
+                itemStyle,
+                index === 0 && itemFirstStyle,
               )}>
               {item !== Gap ? render(item, index) : <View />}
             </View>
