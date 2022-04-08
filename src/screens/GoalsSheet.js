@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Text, View} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import Animated from 'react-native-reanimated';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {useStoreState} from 'easy-peasy';
@@ -8,6 +8,7 @@ import tw from 'twrnc';
 import {Button} from '../components/Button';
 import {ProgressBar} from '../components/ProgressBar';
 import {SelectList} from '../components/SelectList';
+import {useGoalsList} from '../utils/hooks';
 import {blocksToHours, getISODate} from '../utils/time';
 
 const CustomBackground = ({style}) => (
@@ -28,11 +29,7 @@ const CustomHandle = ({style}) => (
 );
 
 export const GoalsSheet = ({height, navigation}) => {
-  const displayedDate = useStoreState(state => state.ui.displayedDate);
-  const ISODate = getISODate(displayedDate);
-  const routines = useStoreState(state => state.routines);
-  const goals = useStoreState(state => state.goals);
-  const dateGoals = goals[ISODate];
+  const goals = useGoalsList();
   const bottomSheetRef = useRef(null);
   const [index, setIndex] = useState(0);
 
@@ -44,8 +41,6 @@ export const GoalsSheet = ({height, navigation}) => {
   const handleSheetChanges = index => {
     setIndex(index);
   };
-
-  useEffect(() => {}, [goals]);
 
   return (
     <BottomSheet
@@ -71,47 +66,45 @@ export const GoalsSheet = ({height, navigation}) => {
           </Text>
         </View>
 
-        {!isEmpty(dateGoals) ? (
+        {!isEmpty(goals) ? (
           <SelectList
-            items={routines
-              .filter(routine => dateGoals[routine.id] > 0)
-              .map(routine => ({
-                ...routine,
-                onLongPress: () => {
-                  navigation.navigate('GoalsModal', {});
-                },
-              }))}
+            items={goals}
+            onLongPress={() => {
+              navigation.navigate('GoalsModal', {});
+            }}
             style="dark:bg-zinc-900 p-0"
             itemStyle="dark:border-[#131315] border-t border-b-0 pr-0"
             itemFirstStyle="border-t-0"
-            render={routine => {
+            render={goal => {
               return (
                 <View style={tw`flex-row justify-between`}>
                   <View style={tw`flex flex-row items-center`}>
-                    <View
-                      style={tw`rounded-full w-5 h-5 bg-[${routine.color}]`}
-                    />
+                    <View style={tw`rounded-full w-5 h-5 bg-[${goal.color}]`} />
                     <Text
                       numberOfLines={1}
                       ellipsizeMode="tail"
                       style={tw`ml-3 text-black w-20 dark:text-zinc-200`}>
-                      {routine.title}
+                      {goal.title}
                     </Text>
                   </View>
 
                   <View style={tw`flex flex-row items-center`}>
                     <View style={tw`mr-1`}>
-                      <ProgressBar progress={0} />
+                      <ProgressBar
+                        percentage={Math.floor(
+                          (goal.progress / goal.goal) * 100,
+                        )}
+                      />
                     </View>
                     <Text
                       style={tw`dark:text-white font-bold w-10 text-center`}>
-                      0{' '}
+                      {goal.progress}{' '}
                       <Text style={tw`dark:text-zinc-600 font-normal`}>
-                        / {dateGoals[routine.id]}
+                        / {goal.goal}
                       </Text>
                     </Text>
                     <Text style={tw`dark:text-zinc-600 w-15 ml-3`}>
-                      {blocksToHours(dateGoals[routine.id])}
+                      {blocksToHours(goal.goal)}
                     </Text>
                   </View>
                 </View>

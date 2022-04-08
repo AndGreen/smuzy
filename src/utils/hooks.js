@@ -1,12 +1,12 @@
-import {useCallback, useState} from 'react';
-import {Platform, useColorScheme} from 'react-native';
-import {getWeekRangeBlockId} from './time';
-import {useStoreState} from 'easy-peasy';
 import {useFocusEffect} from '@react-navigation/native';
-import * as MediaLibrary from 'expo-media-library';
-import * as FileSystem from 'expo-file-system';
-import * as Sharing from 'expo-sharing';
+import {useCallback, useEffect, useState} from 'react';
+import {Platform, useColorScheme} from 'react-native';
+import {useStoreState} from 'easy-peasy';
 import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
+import * as Sharing from 'expo-sharing';
+import {getDayFirstBlockId, getISODate, getWeekRangeBlockId} from './time';
 
 export const useIsDark = () => {
   const scheme = useColorScheme();
@@ -67,4 +67,32 @@ export const useReadFile = () => {
       onSuccess(data);
     }
   }, []);
+};
+
+export const useGoalsList = () => {
+  const history = useStoreState(state => state.history);
+  const routines = useStoreState(state => state.routines);
+  const goalsHistory = useStoreState(state => state.goals);
+  const displayedDate = useStoreState(state => state.ui.displayedDate);
+  const firstDayBlockId = getDayFirstBlockId(displayedDate);
+  const dateGoals = goalsHistory[getISODate(displayedDate)];
+
+  let goals = dateGoals
+    ? routines
+        .filter(routine => dateGoals[routine.id] > 0)
+        .map(routine => ({
+          ...routine,
+          progress: 0,
+          goal: dateGoals[routine.id],
+        }))
+    : [];
+
+  for (let i = 0; i < 72; i++) {
+    const index = goals.findIndex(
+      result => result.id === history[firstDayBlockId + i],
+    );
+    if (index >= 0) goals[index].progress = goals[index].progress + 1;
+  }
+
+  return goals;
 };

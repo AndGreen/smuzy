@@ -8,6 +8,8 @@ export const SelectList = ({
   items,
   render,
   style,
+  onPress,
+  onLongPress,
   itemStyle,
   itemFirstStyle,
 }) => {
@@ -18,7 +20,9 @@ export const SelectList = ({
         data={items}
         keyExtractor={(item, index) => item.id || index}
         renderItem={({item, index}) => (
-          <Pressable onPress={item.onPress} onLongPress={item.onLongPress}>
+          <Pressable
+            onPress={item.onPress || onPress}
+            onLongPress={item.onLongPress || onLongPress}>
             <View
               style={tw.style(
                 `border-white dark:border-black bg-gray-100 dark:bg-zinc-900 

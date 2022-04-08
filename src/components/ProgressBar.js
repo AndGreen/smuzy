@@ -2,12 +2,13 @@ import React from 'react';
 import {View} from 'react-native';
 import tw from 'twrnc';
 
-export const ProgressBar = ({progress}) => {
-  const width = 28;
-  const progressWidth = progress ? `w-[${Math.floor(progress * 100)}%]` : 'w-0';
+export const ProgressBar = ({percentage}) => {
+  const width = percentage > 100 ? 100 : percentage;
   return (
-    <View style={tw`w-${width} h-1 mr-3 dark:bg-white/10`}>
-      <View style={tw.style(`h-1 dark:bg-white`, progressWidth)} />
+    <View style={tw`w-28 h-1 mr-3 dark:bg-white/10`}>
+      <View
+        style={tw.style(`h-1 dark:bg-white`, width ? `w-[${width}%]` : 'w-0')}
+      />
     </View>
   );
 };
