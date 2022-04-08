@@ -1,15 +1,14 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import React, {useMemo, useRef, useState} from 'react';
+import {Text, View} from 'react-native';
 import Animated from 'react-native-reanimated';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {useStoreState} from 'easy-peasy';
-import {isEmpty} from 'lodash';
 import tw from 'twrnc';
 import {Button} from '../components/Button';
 import {ProgressBar} from '../components/ProgressBar';
 import {SelectList} from '../components/SelectList';
 import {useGoalsList} from '../utils/hooks';
-import {blocksToHours, getISODate} from '../utils/time';
+import {blocksToHours} from '../utils/time';
 
 const CustomBackground = ({style}) => (
   <Animated.View
@@ -29,7 +28,8 @@ const CustomHandle = ({style}) => (
 );
 
 export const GoalsSheet = ({height, navigation}) => {
-  const goals = useGoalsList();
+  const {goals, isDone, isWasted} = useGoalsList();
+  const displayedDate = useStoreState(state => state.ui.displayedDate);
   const bottomSheetRef = useRef(null);
   const [index, setIndex] = useState(0);
 
@@ -66,7 +66,29 @@ export const GoalsSheet = ({height, navigation}) => {
           </Text>
         </View>
 
-        {!isEmpty(goals) ? (
+        {isDone && (
+          <View style={tw`justify-center items-center mb-4 mt-2`}>
+            <Text
+              style={tw`text-center text-base text-green-500 
+              border border-green-500/10 rounded
+              p-2 w-80% pl-3`}>
+              You are awesome! 🎉
+            </Text>
+          </View>
+        )}
+
+        {isWasted && (
+          <View style={tw`justify-center items-center mb-4 mt-2`}>
+            <Text
+              style={tw`text-center text-base text-red-500 
+              border border-red-500/10 rounded
+              p-2 w-80% pl-3`}>
+              It so sad 😢
+            </Text>
+          </View>
+        )}
+
+        {goals ? (
           <SelectList
             items={goals}
             onLongPress={() => {

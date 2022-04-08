@@ -60,3 +60,5 @@ export const blocksToHours = blockCount => {
 };
 
 export const getISODate = date => formatISO(date, {representation: 'date'});
+
+export const isBlockFuture = blockId => blockId > getTimeBlockId();

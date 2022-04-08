@@ -1,12 +1,18 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {Platform, useColorScheme} from 'react-native';
+import {isPast, isToday} from 'date-fns';
 import {useStoreState} from 'easy-peasy';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import * as Sharing from 'expo-sharing';
-import {getDayFirstBlockId, getISODate, getWeekRangeBlockId} from './time';
+import {
+  getDayFirstBlockId,
+  getISODate,
+  getWeekRangeBlockId,
+  isBlockFuture,
+} from './time';
 
 export const useIsDark = () => {
   const scheme = useColorScheme();
@@ -75,7 +81,8 @@ export const useGoalsList = () => {
   const goalsHistory = useStoreState(state => state.goals);
   const displayedDate = useStoreState(state => state.ui.displayedDate);
   const firstDayBlockId = getDayFirstBlockId(displayedDate);
-  const dateGoals = goalsHistory[getISODate(displayedDate)];
+  const ISODate = getISODate(displayedDate);
+  const dateGoals = goalsHistory[ISODate];
 
   let goals = dateGoals
     ? routines
@@ -85,14 +92,24 @@ export const useGoalsList = () => {
           progress: 0,
           goal: dateGoals[routine.id],
         }))
-    : [];
+    : null;
 
-  for (let i = 0; i < 72; i++) {
-    const index = goals.findIndex(
-      result => result.id === history[firstDayBlockId + i],
-    );
-    if (index >= 0) goals[index].progress = goals[index].progress + 1;
+  if (goals) {
+    for (let i = 0; i < 72; i++) {
+      const blockId = firstDayBlockId + i;
+      const index = goals.findIndex(result => result.id === history[blockId]);
+      if (index >= 0 && !isBlockFuture(blockId))
+        goals[index].progress = goals[index].progress + 1;
+    }
   }
 
-  return goals;
+  const isDone =
+    isPast(displayedDate) &&
+    goals &&
+    goals.filter(goal => goal.progress < goal.goal).length === 0;
+
+  const isWasted =
+    isPast(displayedDate) && !isToday(displayedDate) && goals && !isDone;
+
+  return {goals, isDone, isWasted};
 };
