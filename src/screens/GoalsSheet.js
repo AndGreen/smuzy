@@ -3,6 +3,7 @@ import {Text, View} from 'react-native';
 import Animated from 'react-native-reanimated';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {useStoreState} from 'easy-peasy';
+import {isEmpty} from 'lodash';
 import tw from 'twrnc';
 import {Button} from '../components/Button';
 import {SelectList} from '../components/SelectList';
@@ -69,7 +70,7 @@ export const GoalsSheet = ({height, navigation}) => {
           </Text>
         </View>
 
-        {dateGoals ? (
+        {!isEmpty(dateGoals) ? (
           <SelectList
             items={routines
               .filter(routine => dateGoals[routine.id] > 0)
