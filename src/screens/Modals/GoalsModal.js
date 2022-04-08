@@ -13,7 +13,7 @@ const RoundButton = ({onPress, disabled, children}) => {
         !disabled && onPress();
       }}>
       <View
-        style={tw`w-8 h-8 rounded-full bg-zinc-800 items-center justify-center`}>
+        style={tw`w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 items-center justify-center`}>
         <Text style={tw`text-lg font-bold dark:text-zinc-400`}>{children}</Text>
       </View>
     </Pressable>
@@ -108,7 +108,8 @@ export const GoalsModal = ({route, navigation}) => {
                 }>
                 +
               </RoundButton>
-              <Text style={tw`dark:text-zinc-600 w-16 text-center`}>
+              <Text
+                style={tw`text-zinc-400 dark:text-zinc-600 w-16 text-center`}>
                 {blocksToHours(itemGoal)}
               </Text>
             </View>

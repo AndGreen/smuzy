@@ -29,7 +29,6 @@ const CustomHandle = ({style}) => (
 
 export const GoalsSheet = ({height, navigation}) => {
   const {goals, isDone, isWasted} = useGoalsList();
-  const displayedDate = useStoreState(state => state.ui.displayedDate);
   const bottomSheetRef = useRef(null);
   const [index, setIndex] = useState(0);
 
@@ -83,7 +82,7 @@ export const GoalsSheet = ({height, navigation}) => {
               style={tw`text-center text-base text-red-500 
               border border-red-500/10 rounded
               p-2 w-80% pl-3`}>
-              It so sad 😢
+              It is sad 😢
             </Text>
           </View>
         )}

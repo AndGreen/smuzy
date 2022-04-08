@@ -1,7 +1,7 @@
 import React from 'react';
-import tw from 'twrnc';
-import Svg, {Line, Pattern, Rect} from 'react-native-svg';
 import {View} from 'react-native';
+import Svg, {Line, Pattern, Rect} from 'react-native-svg';
+import tw from 'twrnc';
 
 export const FuturePattern = () => {
   return (
@@ -17,7 +17,7 @@ export const FuturePattern = () => {
             y1="50"
             x2="0"
             y2="0"
-            stroke="black"
+            stroke={tw.color('zinc-600 dark:white')}
             strokeWidth="1"
           />
         </Pattern>
