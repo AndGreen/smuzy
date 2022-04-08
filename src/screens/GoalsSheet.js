@@ -6,6 +6,7 @@ import {useStoreState} from 'easy-peasy';
 import {isEmpty} from 'lodash';
 import tw from 'twrnc';
 import {Button} from '../components/Button';
+import {ProgressBar} from '../components/ProgressBar';
 import {SelectList} from '../components/SelectList';
 import {blocksToHours, getISODate} from '../utils/time';
 
@@ -81,7 +82,7 @@ export const GoalsSheet = ({height, navigation}) => {
                 },
               }))}
             style="dark:bg-zinc-900 p-0"
-            itemStyle="dark:border-[#131315] border-t border-b-0"
+            itemStyle="dark:border-[#131315] border-t border-b-0 pr-0"
             itemFirstStyle="border-t-0"
             render={routine => {
               return (
@@ -93,17 +94,23 @@ export const GoalsSheet = ({height, navigation}) => {
                     <Text
                       numberOfLines={1}
                       ellipsizeMode="tail"
-                      style={tw`ml-3 w-40 text-black dark:text-zinc-200`}>
+                      style={tw`ml-3 text-black w-20 dark:text-zinc-200`}>
                       {routine.title}
                     </Text>
                   </View>
 
                   <View style={tw`flex flex-row items-center`}>
+                    <View style={tw`mr-1`}>
+                      <ProgressBar progress={0} />
+                    </View>
                     <Text
                       style={tw`dark:text-white font-bold w-10 text-center`}>
-                      {dateGoals[routine.id]}
+                      0{' '}
+                      <Text style={tw`dark:text-zinc-600 font-normal`}>
+                        / {dateGoals[routine.id]}
+                      </Text>
                     </Text>
-                    <Text style={tw`dark:text-zinc-600 w-15`}>
+                    <Text style={tw`dark:text-zinc-600 w-15 ml-3`}>
                       {blocksToHours(dateGoals[routine.id])}
                     </Text>
                   </View>
