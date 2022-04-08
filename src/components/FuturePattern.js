@@ -2,8 +2,10 @@ import React from 'react';
 import {View} from 'react-native';
 import Svg, {Line, Pattern, Rect} from 'react-native-svg';
 import tw from 'twrnc';
+import {useIsDark} from '../utils/hooks';
 
 export const FuturePattern = () => {
+  const isDark = useIsDark();
   return (
     <View style={tw`absolute w-full h-full z-10`}>
       <Svg height="100%" width="100%" viewBox="0 0 50 50">
@@ -17,7 +19,7 @@ export const FuturePattern = () => {
             y1="50"
             x2="0"
             y2="0"
-            stroke={tw.color('zinc-600 dark:white')}
+            stroke={tw.color(isDark ? 'black' : 'zinc-600')}
             strokeWidth="1"
           />
         </Pattern>
