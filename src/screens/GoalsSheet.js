@@ -69,55 +69,59 @@ export const GoalsSheet = ({height, navigation}) => {
           </Text>
         </View>
 
-        <SelectList
-          items={routines
-            .filter(routine => dateGoals[routine.id] > 0)
-            .map(routine => ({
-              ...routine,
-              onLongPress: () => {
-                navigation.navigate('GoalsModal', {});
-              },
-            }))}
-          style="dark:bg-zinc-900 p-0"
-          itemStyle="dark:border-[#131315] border-t border-b-0"
-          itemFirstStyle="border-t-0"
-          render={routine => {
-            return (
-              <View style={tw`flex-row justify-between`}>
-                <View style={tw`flex flex-row items-center`}>
-                  <View
-                    style={tw`rounded-full w-5 h-5 bg-[${routine.color}]`}
-                  />
-                  <Text
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                    style={tw`ml-3 w-40 text-black dark:text-zinc-200`}>
-                    {routine.title}
-                  </Text>
-                </View>
+        {dateGoals ? (
+          <SelectList
+            items={routines
+              .filter(routine => dateGoals[routine.id] > 0)
+              .map(routine => ({
+                ...routine,
+                onLongPress: () => {
+                  navigation.navigate('GoalsModal', {});
+                },
+              }))}
+            style="dark:bg-zinc-900 p-0"
+            itemStyle="dark:border-[#131315] border-t border-b-0"
+            itemFirstStyle="border-t-0"
+            render={routine => {
+              return (
+                <View style={tw`flex-row justify-between`}>
+                  <View style={tw`flex flex-row items-center`}>
+                    <View
+                      style={tw`rounded-full w-5 h-5 bg-[${routine.color}]`}
+                    />
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                      style={tw`ml-3 w-40 text-black dark:text-zinc-200`}>
+                      {routine.title}
+                    </Text>
+                  </View>
 
-                <View style={tw`flex flex-row items-center`}>
-                  <Text style={tw`dark:text-white font-bold w-10 text-center`}>
-                    {dateGoals[routine.id]}
-                  </Text>
-                  <Text style={tw`dark:text-zinc-600 w-15`}>
-                    {blocksToHours(dateGoals[routine.id])}
-                  </Text>
+                  <View style={tw`flex flex-row items-center`}>
+                    <Text
+                      style={tw`dark:text-white font-bold w-10 text-center`}>
+                      {dateGoals[routine.id]}
+                    </Text>
+                    <Text style={tw`dark:text-zinc-600 w-15`}>
+                      {blocksToHours(dateGoals[routine.id])}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            );
-          }}
-        />
-        <View style={tw`items-center mt-3`}>
-          <Button
-            onPress={() => {
-              navigation.navigate('GoalsModal', {
-                isNew: true,
-              });
-            }}>
-            New goals
-          </Button>
-        </View>
+              );
+            }}
+          />
+        ) : (
+          <View style={tw`items-center mt-3`}>
+            <Button
+              onPress={() => {
+                navigation.navigate('GoalsModal', {
+                  isNew: true,
+                });
+              }}>
+              New goals
+            </Button>
+          </View>
+        )}
       </View>
     </BottomSheet>
   );
