@@ -1,22 +1,22 @@
 import React from 'react';
+import {Pressable, Text, View} from 'react-native';
+import {
+  Directions,
+  FlingGestureHandler,
+  State,
+} from 'react-native-gesture-handler';
+import {Ionicons} from '@expo/vector-icons';
+import {addDays, subDays} from 'date-fns';
 import {useStoreActions, useStoreState} from 'easy-peasy';
-import {View, Text, Pressable} from 'react-native';
+import * as Haptics from 'expo-haptics';
 import tw from 'twrnc';
+import {usePlatform} from '../utils/hooks';
 import {
   getBlockIdByNumInDay,
   getBlockRange,
   getDayFirstBlockId,
 } from '../utils/time';
-import * as Haptics from 'expo-haptics';
-import {
-  FlingGestureHandler,
-  Directions,
-  State,
-} from 'react-native-gesture-handler';
-import {subDays, addDays} from 'date-fns';
 import {FuturePattern} from './FuturePattern';
-import {usePlatform} from '../utils/hooks';
-import {Ionicons} from '@expo/vector-icons';
 
 const lines = [
   '00:00',
@@ -78,6 +78,7 @@ export const DayGrid = () => {
                 style={tw`flex flex-row items-center`}
                 key={`day-line-${lineNum}`}>
                 <Text
+                  allowFontScaling={false}
                   style={tw`text-xs dark:text-gray-500 w-9 text-right mr-2`}>
                   {lineLabel}
                 </Text>

@@ -44,10 +44,10 @@ export const SettingsScreen = () => {
             });
           },
         },
-        Gap,
-        'Request Feature',
-        'Feedback',
-        'Contact Support',
+        // Gap,
+        // 'Request Feature',
+        // 'Feedback',
+        // 'Contact Support',
       ]}
       render={item => (
         <Text style={tw`dark:text-zinc-200 text-base`}>

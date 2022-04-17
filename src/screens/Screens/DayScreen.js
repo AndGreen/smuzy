@@ -6,10 +6,12 @@ import {RoutinesList} from '../../components/RoutinesList';
 import {GoalsSheet} from '../GoalsSheet';
 
 export const DayScreen = ({navigation}) => {
-  const [height, setHeight] = useState(350);
+  const [height, setHeight] = useState(null);
+
+  const isHeight = children => (height ? children : null);
 
   return (
-    <View style={tw`flex w-full h-full`}>
+    <View style={tw`flex h-screen flex-1`}>
       <View style={tw`dark:bg-zinc-800 bg-gray-100`}>
         <DayGrid />
       </View>
@@ -18,11 +20,13 @@ export const DayScreen = ({navigation}) => {
         onLayout={event => {
           setHeight(event.nativeEvent.layout.height);
         }}
-        style={tw`flex flex-row flex-wrap flex-grow pl-2 pt-3 dark:bg-black bg-white`}>
-        <RoutinesList navigation={navigation} />
+        style={tw`dark:bg-black bg-white pt-3 pl-3 flex-1`}>
+        <View>
+          {isHeight(<RoutinesList height={height} navigation={navigation} />)}
+        </View>
       </View>
 
-      <GoalsSheet navigation={navigation} height={height} />
+      {isHeight(<GoalsSheet navigation={navigation} height={height} />)}
     </View>
   );
 };

@@ -40,12 +40,14 @@ export const AnalyticsScreen = ({navigation}) => {
 
             <View style={tw`flex flex-row items-center`}>
               <Text
+                allowFontScaling={false}
                 style={tw`text-black w-18 font-bold dark:text-zinc-200 no-underline`}>
                 {itemBlocks ? blocksToHours(itemBlocks) : '-'}
               </Text>
               <View style={tw`w-18`}>
                 {itemBlocks !== prevItemBlocks && (
                   <Text
+                    allowFontScaling={false}
                     style={tw.style(
                       `no-underline`,
                       itemBlocks > prevItemBlocks

@@ -2,8 +2,8 @@ import React, {useMemo, useRef, useState} from 'react';
 import {Text, View} from 'react-native';
 import Animated from 'react-native-reanimated';
 import BottomSheet from '@gorhom/bottom-sheet';
-import {useStoreState} from 'easy-peasy';
 import tw from 'twrnc';
+import {GOALS_SHEET_HEIGHT} from '../common/constants';
 import {Button} from '../components/Button';
 import {ProgressBar} from '../components/ProgressBar';
 import {SelectList} from '../components/SelectList';
@@ -35,7 +35,7 @@ export const GoalsSheet = ({height, navigation}) => {
   const handleSnapToIndex = (index = 1) =>
     bottomSheetRef.current.snapToIndex(index);
 
-  const snapPoints = useMemo(() => [60, height - 10], [height]);
+  const snapPoints = useMemo(() => [GOALS_SHEET_HEIGHT, height], [height]);
 
   const handleSheetChanges = index => {
     setIndex(index);
@@ -52,6 +52,7 @@ export const GoalsSheet = ({height, navigation}) => {
       <View style={tw`h-full px-2`}>
         <View style={tw`mb-3`}>
           <Text
+            allowFontScaling={false}
             onPress={() => {
               handleSnapToIndex(index ? 0 : 1);
             }}

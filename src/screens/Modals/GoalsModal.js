@@ -109,6 +109,7 @@ export const GoalsModal = ({route, navigation}) => {
                 +
               </RoundButton>
               <Text
+                allowFontScaling={false}
                 style={tw`text-zinc-400 dark:text-zinc-600 w-16 text-center`}>
                 {blocksToHours(itemGoal)}
               </Text>

@@ -1,20 +1,27 @@
-import React from 'react';
-import {Pressable, Text, View} from 'react-native';
-
+import React, {useMemo} from 'react';
+import {Pressable, ScrollView, Text, View} from 'react-native';
 import {useStoreActions, useStoreState} from 'easy-peasy';
 import tw from 'twrnc';
-
+import {GOALS_SHEET_HEIGHT} from '../common/constants';
 import {Button} from './Button';
 
-export const RoutinesList = ({navigation}) => {
+export const RoutinesList = ({navigation, height}) => {
   const list = useStoreState(state => state.routines);
   const active = useStoreState(state => state.ui.activeRoutine);
   const setActiveRoutine = useStoreActions(state => state.setActiveRoutine);
 
+  const memoHeight = useMemo(() => {
+    return height;
+  }, []);
+
+  const BOTTOM_PADDING = 8;
+
   return (
-    <>
-      <>
-        {list?.map((routine, id) => {
+    <ScrollView
+      alwaysBounceVertical={false}
+      style={tw`h-[${memoHeight - GOALS_SHEET_HEIGHT - BOTTOM_PADDING}px]`}>
+      <View style={tw`flex-row flex-wrap`}>
+        {list?.map(routine => {
           const isChosen = routine.id === active;
           return (
             <Pressable
@@ -43,6 +50,7 @@ export const RoutinesList = ({navigation}) => {
                   )}
                 />
                 <Text
+                  allowFontScaling={false}
                   style={tw.style(
                     `text-base text-center`,
                     isChosen
@@ -55,15 +63,15 @@ export const RoutinesList = ({navigation}) => {
             </Pressable>
           );
         })}
-      </>
-      <Button
-        onPress={() => {
-          navigation.navigate('RoutineModal', {
-            isNew: true,
-          });
-        }}>
-        New
-      </Button>
-    </>
+        <Button
+          onPress={() => {
+            navigation.navigate('RoutineModal', {
+              isNew: true,
+            });
+          }}>
+          New
+        </Button>
+      </View>
+    </ScrollView>
   );
 };
