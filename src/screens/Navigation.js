@@ -48,7 +48,7 @@ const Main = () => {
         name="Analytics"
         component={AnalyticsScreen}
         options={() => ({
-          headerTitle: 'Week (...)',
+          headerTitle: 'This week (...)',
         })}
       />
       <Tab.Screen name="Settings" component={SettingsScreen} />

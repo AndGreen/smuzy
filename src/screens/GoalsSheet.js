@@ -27,6 +27,8 @@ const CustomHandle = ({style}) => (
   </View>
 );
 
+const SHEET_TOP_PADDING = 8;
+
 export const GoalsSheet = ({height, navigation}) => {
   const {goals, isDone, isWasted} = useGoalsList();
   const bottomSheetRef = useRef(null);
@@ -35,7 +37,10 @@ export const GoalsSheet = ({height, navigation}) => {
   const handleSnapToIndex = (index = 1) =>
     bottomSheetRef.current.snapToIndex(index);
 
-  const snapPoints = useMemo(() => [GOALS_SHEET_HEIGHT, height], [height]);
+  const snapPoints = useMemo(
+    () => [GOALS_SHEET_HEIGHT, height - SHEET_TOP_PADDING],
+    [height],
+  );
 
   const handleSheetChanges = index => {
     setIndex(index);

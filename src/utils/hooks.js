@@ -1,7 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import {useCallback, useState} from 'react';
 import {Platform, useColorScheme} from 'react-native';
-import {isPast, isToday} from 'date-fns';
+import {isPast, isToday, subWeeks} from 'date-fns';
 import {useStoreState} from 'easy-peasy';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
@@ -25,28 +25,35 @@ export const usePlatform = () => {
   return {isIos, isAndroid};
 };
 
-export const useStatistic = date => {
+export const useStatistic = () => {
   const routines = useStoreState(state => state.routines);
   const history = useStoreState(state => state.history);
-  const [firstBlock, lastBlock] = getWeekRangeBlockId(date);
+  const {displayedWeek} = useStoreState(state => state.ui);
   const [analytics, setAnalytics] = useState({});
+  const [prevAnalytics, setPrevAnalytics] = useState({});
+
+  const countAnalytics = date => {
+    const [firstBlock, lastBlock] = getWeekRangeBlockId(date);
+    let newAnalytics = {};
+
+    for (let block = firstBlock; block <= lastBlock; block++) {
+      const routineId = history[block];
+      if (routineId) {
+        newAnalytics[routineId] = newAnalytics[routineId] + 1 || 1;
+      }
+    }
+
+    return newAnalytics;
+  };
 
   useFocusEffect(
     useCallback(() => {
-      let newAnalytics = {};
-
-      for (let block = firstBlock; block <= lastBlock; block++) {
-        const routineId = history[block];
-        if (routineId) {
-          newAnalytics[routineId] = newAnalytics[routineId] + 1 || 1;
-        }
-      }
-
-      setAnalytics(newAnalytics);
-    }, [routines, history]),
+      setAnalytics(countAnalytics(displayedWeek));
+      setPrevAnalytics(countAnalytics(subWeeks(displayedWeek, 1)));
+    }, [routines, history, displayedWeek]),
   );
 
-  return analytics;
+  return [analytics, prevAnalytics];
 };
 
 export const useSaveFile = (fileName, fileData) => {

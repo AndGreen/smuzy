@@ -17,6 +17,7 @@ export const store = createStore(
         timeBlock: null,
         multipleBlock: null,
         displayedDate: new Date(),
+        displayedWeek: new Date(),
         activeRoutine: null,
       },
       restoreBackup: action((state, {routines, colors, history}) => {
@@ -45,6 +46,9 @@ export const store = createStore(
       setDisplayedDate: action((state, date) => {
         state.ui.displayedDate = date;
         state.ui.multipleBlock = null;
+      }),
+      setDisplayedWeek: action((state, date) => {
+        state.ui.displayedWeek = date;
       }),
       setMultipleStartBlock: action((state, blockId) => {
         state.ui.multipleBlock = blockId;

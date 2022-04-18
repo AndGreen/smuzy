@@ -14,6 +14,7 @@ export const BLOCK_DURATION = 20 * 60;
 export const TIMEZONE_OFFSET =
   (-new Date().getTimezoneOffset() / BLOCK_DURATION) * 60;
 export const FILE_TIME_FORMAT = 'MM_dd_yyyy';
+export const TIME_FORMAT = 'dd.MM.yy';
 
 export const getFileTime = () => format(new Date(), FILE_TIME_FORMAT);
 
@@ -48,7 +49,7 @@ export const getFormattedDate = date => {
   if (isToday(date)) result = 'today';
   if (isTomorrow(date)) result = 'tomorrow';
   if (isYesterday(date)) result = 'yesterday';
-  if (!result) result = format(date, 'MM/dd/yy');
+  if (!result) result = format(date, TIME_FORMAT);
   return `${result} - ${format(date, 'EE').toLowerCase()}`;
 };
 
@@ -62,3 +63,20 @@ export const blocksToHours = blockCount => {
 export const getISODate = date => formatISO(date, {representation: 'date'});
 
 export const isBlockFuture = blockId => blockId > getTimeBlockId();
+
+export const getWeekDaysFormatted = date => {
+  const firstDayOfWeek = format(
+    startOfWeek(date, {
+      weekStartsOn: 1,
+    }),
+    TIME_FORMAT,
+  );
+  const lastDayOfWeek = format(
+    endOfWeek(date, {
+      weekStartsOn: 1,
+    }),
+    TIME_FORMAT,
+  );
+
+  return [firstDayOfWeek, lastDayOfWeek];
+};
